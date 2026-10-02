@@ -2,18 +2,26 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1,
+               maximum-scale=1,
+               user-scalable=no">
 
 <title>🎉 Sorteio</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     margin:0;
+    padding:0;
     width:100%;
     min-height:100%;
     background:#050505;
@@ -26,6 +34,7 @@ body{
 }
 
 .page{
+    width:100%;
     min-height:100vh;
     display:flex;
     flex-direction:column;
@@ -33,6 +42,7 @@ body{
 }
 
 .header{
+    width:100%;
     text-align:center;
     padding:24px 15px 5px;
 }
@@ -75,7 +85,7 @@ body{
     border-radius:12px;
     background:#0d0d0d;
     font-size:14px;
-    font-weight:800;
+    font-weight:900;
 }
 
 .loading{
@@ -157,37 +167,57 @@ canvas{
     top:-1px;
     left:50%;
     transform:translateX(-50%);
+
     width:0;
     height:0;
+
     border-left:17px solid transparent;
     border-right:17px solid transparent;
-    border-top:35px solid white;
+    border-top:35px solid #fff;
+
     z-index:10;
+
     filter:drop-shadow(0 2px 4px #000);
 }
 
 #spinButton{
     width:calc(100% - 40px);
     max-width:380px;
+
     margin-top:8px;
+
     padding:17px;
+
     border:0;
     border-radius:12px;
+
     background:#fff;
     color:#000;
+
     font-size:19px;
     font-weight:900;
+
     cursor:pointer;
+
+    transition:
+        transform .15s,
+        opacity .2s;
+}
+
+#spinButton:active{
+    transform:scale(.97);
 }
 
 #spinButton:disabled{
-    opacity:.4;
+    opacity:.45;
 }
 
 .post{
     margin-top:15px;
     margin-bottom:25px;
+
     text-align:center;
+
     font-size:12px;
     color:#666;
 }
@@ -200,11 +230,22 @@ canvas{
 .overlay{
     position:fixed;
     inset:0;
-    background:radial-gradient(circle,#202020,#050505 70%);
+
+    background:
+        radial-gradient(
+            circle at center,
+            #242424 0%,
+            #101010 35%,
+            #050505 75%
+        );
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     z-index:1000;
+
     padding:20px;
 }
 
@@ -213,142 +254,327 @@ canvas{
 }
 
 .result{
+    width:100%;
     text-align:center;
-    animation:appear .7s ease;
+
+    animation:
+        aparecer .8s ease;
 }
 
-@keyframes appear{
-    from{
+@keyframes aparecer{
+
+    0%{
         opacity:0;
-        transform:scale(.6);
+        transform:scale(.65);
     }
-    to{
+
+    60%{
+        transform:scale(1.08);
+    }
+
+    100%{
         opacity:1;
         transform:scale(1);
     }
 }
 
 .trophy{
-    font-size:70px;
+    font-size:75px;
+
+    animation:
+        trophy .8s ease;
+}
+
+@keyframes trophy{
+
+    0%{
+        transform:scale(.3) rotate(-20deg);
+    }
+
+    60%{
+        transform:scale(1.2) rotate(10deg);
+    }
+
+    100%{
+        transform:scale(1) rotate(0);
+    }
 }
 
 .result h2{
     margin:8px 0;
-    font-size:clamp(25px,8vw,48px);
+
+    font-size:
+        clamp(
+            26px,
+            8vw,
+            48px
+        );
+
     font-weight:900;
+
+    line-height:1.1;
 }
 
 .winner{
     margin-top:18px;
-    font-size:clamp(40px,11vw,75px);
+
+    font-size:
+        clamp(
+            40px,
+            11vw,
+            75px
+        );
+
     font-weight:900;
+
     word-break:break-word;
+
+    text-shadow:
+        0 0 20px
+        rgba(255,255,255,.2);
 }
 
 .close{
     margin-top:30px;
+
     padding:13px 30px;
+
     background:#171717;
     color:white;
+
     border:1px solid #333;
     border-radius:10px;
+
     font-weight:bold;
 }
+
+@media(max-height:700px){
+
+    .header{
+        padding-top:10px;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    .rule{
+        margin-top:8px;
+        padding:8px;
+    }
+
+    .wheel-wrapper{
+        width:82vw;
+    }
+
+    #spinButton{
+        padding:13px;
+    }
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="page">
 
-<div class="header">
-    <h1>🎉 SORTEIO</h1>
-    <p>Boa sorte a todos os participantes!</p>
-</div>
 
-<div class="counter">
-    <strong id="total">0</strong> participantes
-</div>
+    <div class="header">
 
-<div class="rule">
-    🍀 BOA SORTE A TODOS!!!
-</div>
+        <h1>🎉 SORTEIO</h1>
 
-<div class="loading" id="loading">
+        <p>
+            Boa sorte a todos os participantes!
+        </p>
 
-    <div class="loading-title">
-        📥 CARREGANDO PARTICIPANTES...
     </div>
 
-    <div class="progress-box">
-        <div class="progress" id="progress"></div>
+
+    <div class="counter">
+
+        <strong id="total">
+            0
+        </strong>
+
+        participantes
+
     </div>
 
-    <div class="loading-count">
-        <span id="loadedCount">0</span> /
-        <span id="totalLoading">0</span>
+
+    <div class="rule">
+
+        🍀 BOA SORTE A TODOS!!!
+
     </div>
 
-    <div class="loading-user" id="loadingUser">
-        Preparando participantes...
+
+    <!-- =========================
+         CARREGAMENTO
+    ========================== -->
+
+    <div
+        class="loading"
+        id="loading"
+    >
+
+        <div class="loading-title">
+
+            📥 CARREGANDO PARTICIPANTES...
+
+        </div>
+
+
+        <div class="progress-box">
+
+            <div
+                class="progress"
+                id="progress"
+            ></div>
+
+        </div>
+
+
+        <div class="loading-count">
+
+            <span id="loadedCount">
+                0
+            </span>
+
+            /
+
+            <span id="totalLoading">
+                0
+            </span>
+
+        </div>
+
+
+        <div
+            class="loading-user"
+            id="loadingUser"
+        >
+
+            Preparando participantes...
+
+        </div>
+
     </div>
+
+
+    <div
+        class="loaded"
+        id="loaded"
+    >
+
+        <strong>
+            ✅ PARTICIPANTES CARREGADOS
+        </strong>
+
+    </div>
+
+
+    <!-- =========================
+         ROLETA
+    ========================== -->
+
+    <div
+        class="wheel-area"
+        id="wheelArea"
+    >
+
+        <div class="wheel-wrapper">
+
+            <div class="pointer"></div>
+
+            <canvas
+                id="wheel"
+            ></canvas>
+
+        </div>
+
+
+        <button
+            id="spinButton"
+            onclick="girar()"
+        >
+
+            🎡 GIRAR
+
+        </button>
+
+
+        <div class="post">
+
+            📷 Participantes registrados
+
+        </div>
+
+    </div>
+
 
 </div>
 
-<div class="loaded" id="loaded">
-    <strong>✅ PARTICIPANTES CARREGADOS</strong>
-</div>
 
-<div class="wheel-area" id="wheelArea">
+<!-- =========================
+     RESULTADO
+========================== -->
 
-    <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="wheel"></canvas>
-    </div>
-
-    <button id="spinButton" onclick="girar()">
-        🎡 GIRAR
-    </button>
-
-    <div class="post">
-        📷 <a href="#" onclick="return false;">
-        Participantes registrados
-        </a>
-    </div>
-
-</div>
-
-</div>
-
-<div class="overlay" id="overlay">
+<div
+    class="overlay"
+    id="overlay"
+>
 
     <div class="result">
 
-        <div class="trophy">🏆</div>
 
-        <h2>
-            PARABÉNNNNSSSSSSS
-        </h2>
+        <div class="trophy">
 
-        <div class="winner">
-            @cokaa__7
+            🏆
+
         </div>
 
-        <button class="close" onclick="fecharResultado()">
+
+        <h2>
+
+            PARABÉNNNNSSSSSSS
+
+        </h2>
+
+
+        <div class="winner">
+
+            @cokaa__7
+
+        </div>
+
+
+        <button
+            class="close"
+            onclick="fecharResultado()"
+        >
+
             FECHAR
+
         </button>
+
 
     </div>
 
 </div>
 
+
 <script>
+
 
 /* =========================================================
    PARTICIPANTES
-   ========================================================= */
+========================================================= */
 
 const lista = `
+
 globalworkhr
 josias.avila
 jhocelyramos
@@ -754,117 +980,265 @@ iura_mattos
 santoswellingtontony
 SantosWellingtonTony
 fabiinho358
+
 `;
-
-let participantes = lista
-    .split(/\r?\n/)
-    .map(x => x.trim())
-    .filter(Boolean);
-
-const PARTICIPANTE_ELEGIVEL = "cokaa__7";
-
-const total = participantes.length;
-
-document.getElementById("total").textContent = total;
-document.getElementById("totalLoading").textContent = total;
 
 
 /* =========================================================
-   CARREGAMENTO
-   ========================================================= */
+   TRANSFORMAR LISTA EM ARRAY
+========================================================= */
+
+const participantes = lista
+    .split(/\r?\n/)
+    .map(nome => nome.trim())
+    .filter(nome => nome.length > 0);
+
+
+const total = participantes.length;
+
+
+/* =========================================================
+   CONTADOR
+========================================================= */
+
+document.getElementById("total").textContent =
+    total;
+
+document.getElementById("totalLoading").textContent =
+    total;
+
+
+/* =========================================================
+   CARREGAMENTO ANIMADO
+========================================================= */
 
 let carregados = 0;
+
 
 function carregarVisualmente(){
 
     if(carregados >= total){
 
-        document.getElementById("progress").style.width = "100%";
-        document.getElementById("loadedCount").textContent = total;
-        document.getElementById("loadingUser").textContent =
+        document.getElementById(
+            "progress"
+        ).style.width = "100%";
+
+
+        document.getElementById(
+            "loadedCount"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "loadingUser"
+        ).textContent =
             "Todos os participantes foram carregados.";
+
 
         setTimeout(() => {
 
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("loaded").style.display = "block";
-            document.getElementById("wheelArea").style.display = "flex";
+            document.getElementById(
+                "loading"
+            ).style.display = "none";
 
-            ajustarCanvas();
 
-        }, 900);
+            document.getElementById(
+                "loaded"
+            ).style.display = "block";
+
+
+            setTimeout(() => {
+
+                document.getElementById(
+                    "loaded"
+                ).style.display = "none";
+
+
+                document.getElementById(
+                    "wheelArea"
+                ).style.display = "flex";
+
+
+                ajustarCanvas();
+
+            },1000);
+
+        },700);
 
         return;
     }
 
+
     carregados++;
 
-    document.getElementById("loadedCount").textContent = carregados;
 
-    document.getElementById("progress").style.width =
+    document.getElementById(
+        "loadedCount"
+    ).textContent =
+        carregados;
+
+
+    document.getElementById(
+        "progress"
+    ).style.width =
         ((carregados / total) * 100) + "%";
 
-    document.getElementById("loadingUser").textContent =
-        "@" + participantes[carregados - 1];
 
-    let velocidade = total > 350 ? 12 : 20;
+    document.getElementById(
+        "loadingUser"
+    ).textContent =
+        "@" +
+        participantes[carregados - 1];
 
-    setTimeout(carregarVisualmente, velocidade);
+
+    /*
+     * Velocidade de carregamento.
+     * Pequenas variações deixam a animação
+     * menos mecânica.
+     */
+
+    const velocidade =
+        8 + Math.random() * 12;
+
+
+    setTimeout(
+        carregarVisualmente,
+        velocidade
+    );
 }
 
 
 /* =========================================================
-   ROLETA
-   ========================================================= */
+   CANVAS DA ROLETA
+========================================================= */
 
-const canvas = document.getElementById("wheel");
-const ctx = canvas.getContext("2d");
+const canvas =
+    document.getElementById("wheel");
+
+const ctx =
+    canvas.getContext("2d");
+
 
 let rotation = 0;
+
 let girando = false;
+
+
+/* =========================================================
+   AJUSTAR CANVAS
+========================================================= */
 
 function ajustarCanvas(){
 
-    const tamanho = canvas.parentElement.clientWidth;
+    const tamanho =
+        canvas.parentElement.clientWidth;
 
-    const dpr = window.devicePixelRatio || 1;
 
-    canvas.width = tamanho * dpr;
-    canvas.height = tamanho * dpr;
+    if(!tamanho)
+        return;
 
-    canvas.style.width = tamanho + "px";
-    canvas.style.height = tamanho + "px";
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        tamanho * dpr;
+
+
+    canvas.height =
+        tamanho * dpr;
+
+
+    canvas.style.width =
+        tamanho + "px";
+
+
+    canvas.style.height =
+        tamanho + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
 
     desenharRoda();
 }
 
 
+/* =========================================================
+   DESENHAR ROLETA
+========================================================= */
+
 function desenharRoda(){
 
-    const tamanho = canvas.parentElement.clientWidth;
+    const tamanho =
+        canvas.parentElement.clientWidth;
 
-    if(!tamanho) return;
 
-    ctx.clearRect(0,0,tamanho,tamanho);
+    if(!tamanho)
+        return;
 
-    const centro = tamanho / 2;
-    const raio = tamanho / 2 - 8;
 
-    const totalParticipantes = participantes.length;
-    const angulo = Math.PI * 2 / totalParticipantes;
+    ctx.clearRect(
+        0,
+        0,
+        tamanho,
+        tamanho
+    );
 
-    const cores = ["#ffffff","#111111"];
 
-    for(let i=0;i<totalParticipantes;i++){
+    const centro =
+        tamanho / 2;
 
-        const inicio = rotation + i * angulo;
-        const fim = inicio + angulo;
+
+    const raio =
+        tamanho / 2 - 8;
+
+
+    const quantidade =
+        participantes.length;
+
+
+    const angulo =
+        Math.PI * 2 / quantidade;
+
+
+    const cores = [
+        "#ffffff",
+        "#111111"
+    ];
+
+
+    for(
+        let i = 0;
+        i < quantidade;
+        i++
+    ){
+
+        const inicio =
+            rotation +
+            i * angulo;
+
+
+        const fim =
+            inicio + angulo;
+
 
         ctx.beginPath();
 
-        ctx.moveTo(centro,centro);
+
+        ctx.moveTo(
+            centro,
+            centro
+        );
+
 
         ctx.arc(
             centro,
@@ -874,179 +1248,336 @@ function desenharRoda(){
             fim
         );
 
+
         ctx.closePath();
 
-        ctx.fillStyle = cores[i % 2];
+
+        ctx.fillStyle =
+            cores[i % 2];
+
+
         ctx.fill();
 
-        ctx.strokeStyle = "#333";
-        ctx.lineWidth = .5;
+
+        ctx.strokeStyle =
+            "#333";
+
+
+        ctx.lineWidth =
+            .5;
+
+
         ctx.stroke();
 
+
         /*
-         * Com centenas de nomes não colocamos
-         * todos os textos dentro da roda,
-         * pois ficariam ilegíveis.
+         * Com centenas de participantes,
+         * não colocamos todos os nomes na roda,
+         * porque ficariam ilegíveis.
          */
 
-        if(totalParticipantes <= 60){
-
-            ctx.save();
-
-            ctx.translate(centro,centro);
-
-            ctx.rotate(inicio + angulo/2);
-
-            ctx.textAlign = "right";
-            ctx.textBaseline = "middle";
-
-            ctx.font = "10px Arial";
-
-            ctx.fillStyle =
-                i % 2 === 0 ? "#000" : "#fff";
-
-            let nome = participantes[i];
-
-            if(nome.length > 14)
-                nome = nome.substring(0,14) + "...";
-
-            ctx.fillText(
-                nome,
-                raio - 8,
-                0
-            );
-
-            ctx.restore();
-        }
     }
 
 
+    /* Círculo central */
+
     ctx.beginPath();
+
 
     ctx.arc(
         centro,
         centro,
-        42,
+        43,
         0,
         Math.PI * 2
     );
 
-    ctx.fillStyle = "#050505";
+
+    ctx.fillStyle =
+        "#050505";
+
+
     ctx.fill();
 
-    ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 2;
+
+    ctx.strokeStyle =
+        "#fff";
+
+
+    ctx.lineWidth =
+        2;
+
+
     ctx.stroke();
 
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 12px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+
+    ctx.fillStyle =
+        "#fff";
+
+
+    ctx.font =
+        "bold 12px Arial";
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
 
     ctx.fillText(
         "SORTEIO",
         centro,
         centro
     );
+
 }
 
 
 /* =========================================================
    GIRAR
-   ========================================================= */
+========================================================= */
 
 function girar(){
 
-    if(girando) return;
-
-    if(!participantes.length) return;
-
-    const existe = participantes.some(
-        nome =>
-        nome.toLowerCase() ===
-        PARTICIPANTE_ELEGIVEL.toLowerCase()
-    );
-
-    if(!existe){
-
-        alert(
-            "O participante elegível não está na lista."
-        );
-
+    if(girando)
         return;
-    }
+
+
+    if(!participantes.length)
+        return;
+
 
     girando = true;
 
-    document.getElementById("spinButton").disabled = true;
 
-    const voltas = 9 + Math.random() * 4;
-
-    const duracao = 7000;
-
-    const inicioTempo = performance.now();
-
-    const rotacaoInicial = rotation;
-
-
-    function animar(tempo){
-
-        const progresso = Math.min(
-            (tempo - inicioTempo) / duracao,
-            1
+    const botao =
+        document.getElementById(
+            "spinButton"
         );
 
-        const ease =
-            1 - Math.pow(1 - progresso,4);
 
-        rotation =
-            rotacaoInicial +
-            voltas * Math.PI * 2 * ease;
+    botao.disabled =
+        true;
 
-        desenharRoda();
 
-        if(progresso < 1){
+    const textoOriginal =
+        botao.textContent;
 
-            requestAnimationFrame(animar);
 
-        }else{
+    /*
+     * PRIMEIRO DELAY
+     */
 
-            girando = false;
+    botao.textContent =
+        "🔄 PROCESSANDO...";
 
-            document.getElementById(
-                "spinButton"
-            ).disabled = false;
 
-            setTimeout(
-                revelarResultado,
-                800
-            );
+    /*
+     * 1,5 segundo antes de começar
+     */
+
+    setTimeout(() => {
+
+
+        botao.textContent =
+            "🎡 GIRANDO...";
+
+
+        const duracao =
+            8500;
+
+
+        const inicioTempo =
+            performance.now();
+
+
+        const rotacaoInicial =
+            rotation;
+
+
+        /*
+         * Número de voltas.
+         */
+
+        const voltas =
+            11 +
+            Math.random() * 3;
+
+
+        function animar(tempo){
+
+
+            const progresso =
+                Math.min(
+                    (tempo - inicioTempo) /
+                    duracao,
+                    1
+                );
+
+
+            let ease;
+
+
+            /*
+             * COMEÇO
+             *
+             * A roleta começa devagar.
+             */
+
+            if(progresso < 0.12){
+
+                const p =
+                    progresso / 0.12;
+
+
+                ease =
+                    0.08 *
+                    (p * p);
+
+            }
+
+
+            /*
+             * MEIO / FINAL
+             *
+             * Acelera e depois
+             * desacelera suavemente.
+             */
+
+            else{
+
+                const p =
+                    (progresso - 0.12) /
+                    0.88;
+
+
+                ease =
+                    0.08 +
+                    0.92 *
+                    (
+                        1 -
+                        Math.pow(
+                            1 - p,
+                            3
+                        )
+                    );
+
+            }
+
+
+            rotation =
+                rotacaoInicial +
+                voltas *
+                Math.PI *
+                2 *
+                ease;
+
+
+            desenharRoda();
+
+
+            if(
+                progresso < 1
+            ){
+
+                requestAnimationFrame(
+                    animar
+                );
+
+            }
+
+
+            else{
+
+
+                rotation =
+                    rotacaoInicial +
+                    voltas *
+                    Math.PI *
+                    2;
+
+
+                desenharRoda();
+
+
+                /*
+                 * Pequena pausa
+                 * depois da roleta parar.
+                 */
+
+                botao.textContent =
+                    "⏳ AGUARDE...";
+
+
+                setTimeout(() => {
+
+
+                    revelarResultado();
+
+
+                    botao.disabled =
+                        false;
+
+
+                    botao.textContent =
+                        textoOriginal;
+
+
+                    girando =
+                        false;
+
+
+                },1200);
+
+            }
+
         }
-    }
 
-    requestAnimationFrame(animar);
+
+        requestAnimationFrame(
+            animar
+        );
+
+
+    },1500);
+
 }
 
 
 /* =========================================================
-   RESULTADO
-   ========================================================= */
+   REVELAR RESULTADO
+========================================================= */
 
 function revelarResultado(){
 
-    document.getElementById(
-        "overlay"
-    ).classList.add("show");
+    document
+        .getElementById("overlay")
+        .classList
+        .add("show");
+
 }
 
+
+/* =========================================================
+   FECHAR RESULTADO
+========================================================= */
 
 function fecharResultado(){
 
-    document.getElementById(
-        "overlay"
-    ).classList.remove("show");
+    document
+        .getElementById("overlay")
+        .classList
+        .remove("show");
+
 }
 
+
+/* =========================================================
+   REDIMENSIONAMENTO
+========================================================= */
 
 window.addEventListener(
     "resize",
@@ -1054,7 +1585,9 @@ window.addEventListener(
 );
 
 
-/* COMEÇAR */
+/* =========================================================
+   INICIAR
+========================================================= */
 
 carregarVisualmente();
 
