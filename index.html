@@ -2,850 +2,869 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<title>Sorteio</title>
+<title>🎉 Sorteio</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #050505;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+html,body{
+    margin:0;
+    width:100%;
+    min-height:100%;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    overflow-x: hidden;
+body{
+    overflow-x:hidden;
 }
 
-/* =========================
-   PÁGINA
-========================= */
-
-.page {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.page{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
-/* =========================
-   CABEÇALHO
-========================= */
-
-.header {
-    width: 100%;
-    text-align: center;
-    padding: 22px 15px 5px;
+.header{
+    text-align:center;
+    padding:24px 15px 5px;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: 1px;
+.header h1{
+    margin:0;
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
-.header p {
-    margin: 7px 0 0;
-    color: #8f8f8f;
-    font-size: 14px;
+.header p{
+    margin:8px 0 0;
+    color:#888;
+    font-size:13px;
 }
 
-/* =========================
-   CONTADOR
-========================= */
-
-.counter {
-    margin-top: 15px;
-
-    background: #111;
-    border: 1px solid #242424;
-
-    padding: 9px 20px;
-
-    border-radius: 30px;
-
-    font-size: 14px;
-
-    color: #aaa;
+.counter{
+    margin-top:14px;
+    padding:9px 22px;
+    border:1px solid #292929;
+    background:#111;
+    border-radius:30px;
+    color:#aaa;
+    font-size:13px;
 }
 
-.counter strong {
-    color: #fff;
-    font-size: 17px;
+.counter strong{
+    color:#fff;
+    font-size:18px;
 }
 
-/* =========================
-   REGRA
-========================= */
-
-.rule {
-    width: calc(100% - 30px);
-    max-width: 500px;
-
-    margin-top: 14px;
-
-    background: #0e0e0e;
-
-    border: 1px solid #222;
-
-    border-radius: 12px;
-
-    padding: 11px 15px;
-
-    text-align: center;
-
-    color: #999;
-
-    font-size: 12px;
-
-    line-height: 1.4;
+.rule{
+    width:calc(100% - 30px);
+    max-width:500px;
+    margin:14px auto 5px;
+    padding:12px;
+    text-align:center;
+    border:1px solid #252525;
+    border-radius:12px;
+    background:#0d0d0d;
+    font-size:14px;
+    font-weight:800;
 }
 
-.rule strong {
-    color: #ddd;
+.loading{
+    width:calc(100% - 40px);
+    max-width:500px;
+    margin:20px auto;
+    text-align:center;
 }
 
-/* =========================
-   RODA
-========================= */
-
-.wheel-area {
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    margin-top: 10px;
+.loading-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:15px;
 }
 
-.wheel-wrapper {
-
-    position: relative;
-
-    width: min(94vw, 560px);
-
-    aspect-ratio: 1;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.progress-box{
+    width:100%;
+    height:12px;
+    background:#1b1b1b;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid #292929;
 }
 
-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+.progress{
+    width:0%;
+    height:100%;
+    background:#fff;
+    transition:width .08s linear;
 }
 
-/* =========================
-   PONTEIRO
-========================= */
-
-.pointer {
-
-    position: absolute;
-
-    top: -1px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    width: 0;
-    height: 0;
-
-    border-left: 17px solid transparent;
-    border-right: 17px solid transparent;
-    border-top: 35px solid #ffffff;
-
-    z-index: 10;
-
-    filter:
-        drop-shadow(0 2px 3px rgba(0,0,0,.8));
+.loading-count{
+    margin-top:10px;
+    font-size:16px;
+    font-weight:bold;
 }
 
-/* =========================
-   BOTÃO
-========================= */
-
-#spinButton {
-
-    width: calc(100% - 40px);
-
-    max-width: 380px;
-
-    margin-top: 8px;
-
-    padding: 17px 20px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #fff;
-
-    color: #000;
-
-    font-size: 19px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 20px rgba(255,255,255,.08);
-
-    transition: .15s;
+.loading-user{
+    height:42px;
+    margin-top:15px;
+    color:#888;
+    font-family:monospace;
+    font-size:13px;
+    overflow:hidden;
 }
 
-#spinButton:active {
-    transform: scale(.97);
+.loaded{
+    display:none;
+    text-align:center;
+    margin-top:25px;
 }
 
-#spinButton:disabled {
-    opacity: .45;
+.loaded strong{
+    font-size:20px;
 }
 
-/* =========================
-   PARTICIPANTES
-========================= */
-
-.participants-info {
-
-    margin-top: 15px;
-
-    color: #666;
-
-    font-size: 11px;
-
-    text-align: center;
+.wheel-area{
+    width:100%;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    margin-top:5px;
 }
 
-/* =========================
-   PAINEL ADMIN
-========================= */
-
-.admin {
-
-    width: calc(100% - 30px);
-
-    max-width: 500px;
-
-    margin: 25px auto;
-
-    padding: 15px;
-
-    background: #0d0d0d;
-
-    border: 1px solid #222;
-
-    border-radius: 12px;
+.wheel-wrapper{
+    position:relative;
+    width:min(94vw,560px);
+    aspect-ratio:1;
 }
 
-.admin summary {
-
-    color: #777;
-
-    cursor: pointer;
-
-    font-size: 12px;
-
+canvas{
+    width:100%;
+    height:100%;
+    display:block;
 }
 
-.admin textarea {
-
-    width: 100%;
-
-    height: 180px;
-
-    margin-top: 12px;
-
-    resize: vertical;
-
-    background: #050505;
-
-    color: #fff;
-
-    border: 1px solid #292929;
-
-    border-radius: 8px;
-
-    padding: 10px;
-
-    font-family: monospace;
-
-    font-size: 11px;
-
+.pointer{
+    position:absolute;
+    top:-1px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:17px solid transparent;
+    border-right:17px solid transparent;
+    border-top:35px solid white;
+    z-index:10;
+    filter:drop-shadow(0 2px 4px #000);
 }
 
-.load-button {
-
-    width: 100%;
-
-    margin-top: 8px;
-
-    padding: 12px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #252525;
-
-    color: white;
-
-    font-weight: bold;
-
+#spinButton{
+    width:calc(100% - 40px);
+    max-width:380px;
+    margin-top:8px;
+    padding:17px;
+    border:0;
+    border-radius:12px;
+    background:#fff;
+    color:#000;
+    font-size:19px;
+    font-weight:900;
+    cursor:pointer;
 }
 
-/* =========================
-   RESULTADO
-========================= */
-
-.overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #1b1b1b 0%,
-            #050505 65%
-        );
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    z-index: 1000;
-
-    padding: 20px;
-
+#spinButton:disabled{
+    opacity:.4;
 }
 
-.overlay.show {
-    display: flex;
+.post{
+    margin-top:15px;
+    margin-bottom:25px;
+    text-align:center;
+    font-size:12px;
+    color:#666;
 }
 
-.result {
-
-    width: 100%;
-    max-width: 500px;
-
-    text-align: center;
-
-    padding: 35px 20px;
-
-    animation:
-        aparecer .7s ease;
+.post a{
+    color:#aaa;
+    text-decoration:none;
 }
 
-@keyframes aparecer {
+.overlay{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,#202020,#050505 70%);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:20px;
+}
 
-    from {
-        opacity: 0;
-        transform: scale(.7);
+.overlay.show{
+    display:flex;
+}
+
+.result{
+    text-align:center;
+    animation:appear .7s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:scale(.6);
     }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
+    to{
+        opacity:1;
+        transform:scale(1);
     }
-
 }
 
-.trophy {
-
-    font-size: 55px;
-
-    margin-bottom: 10px;
+.trophy{
+    font-size:70px;
 }
 
-.result h2 {
-
-    margin: 0;
-
-    font-size: 20px;
-
-    color: #999;
-
+.result h2{
+    margin:8px 0;
+    font-size:clamp(25px,8vw,48px);
+    font-weight:900;
 }
 
-.result .winner {
-
-    margin-top: 18px;
-
-    font-size: clamp(
-        38px,
-        10vw,
-        70px
-    );
-
-    font-weight: 900;
-
-    color: white;
-
-    word-break: break-word;
-
-    text-shadow:
-        0 0 25px rgba(255,255,255,.2);
+.winner{
+    margin-top:18px;
+    font-size:clamp(40px,11vw,75px);
+    font-weight:900;
+    word-break:break-word;
 }
 
-.result .congratulations {
-
-    margin-top: 18px;
-
-    font-size: 20px;
-
-    color: #aaa;
+.close{
+    margin-top:30px;
+    padding:13px 30px;
+    background:#171717;
+    color:white;
+    border:1px solid #333;
+    border-radius:10px;
+    font-weight:bold;
 }
-
-.close-button {
-
-    margin-top: 30px;
-
-    padding: 13px 30px;
-
-    border: 1px solid #333;
-
-    border-radius: 9px;
-
-    background: #171717;
-
-    color: #fff;
-
-    font-weight: bold;
-
-}
-
-/* =========================
-   DESKTOP
-========================= */
-
-@media (min-width: 700px) {
-
-    .header h1 {
-        font-size: 32px;
-    }
-
-    .rule {
-        font-size: 13px;
-    }
-
-    .wheel-wrapper {
-        width: 600px;
-    }
-
-}
-
-/* =========================
-   CELULAR PEQUENO
-========================= */
-
-@media (max-height: 700px) {
-
-    .header {
-        padding-top: 10px;
-    }
-
-    .header h1 {
-        font-size: 21px;
-    }
-
-    .counter {
-        margin-top: 8px;
-    }
-
-    .rule {
-        margin-top: 8px;
-        padding: 7px 10px;
-    }
-
-    .wheel-area {
-        margin-top: 3px;
-    }
-
-    .wheel-wrapper {
-        width: 82vw;
-    }
-
-    #spinButton {
-        padding: 13px;
-        margin-top: 2px;
-    }
-
-}
-
 </style>
 </head>
-
 
 <body>
 
 <div class="page">
 
-    <div class="header">
+<div class="header">
+    <h1>🎉 SORTEIO</h1>
+    <p>Boa sorte a todos os participantes!</p>
+</div>
 
-        <h1>🎉 SORTEIO</h1>
+<div class="counter">
+    <strong id="total">0</strong> participantes
+</div>
 
-        <p>Boa sorte a todos os participantes!</p>
+<div class="rule">
+    🍀 BOA SORTE A TODOS!!!
+</div>
 
+<div class="loading" id="loading">
+
+    <div class="loading-title">
+        📥 CARREGANDO PARTICIPANTES...
     </div>
 
-
-    <div class="counter">
-
-        <strong id="total">0</strong>
-        participantes
-
+    <div class="progress-box">
+        <div class="progress" id="progress"></div>
     </div>
 
-
-    <div class="rule">
-
-        🎯
-        <strong>
-           BOA SORTE A TODOS!
-        </strong>
-
+    <div class="loading-count">
+        <span id="loadedCount">0</span> /
+        <span id="totalLoading">0</span>
     </div>
 
-
-    <!-- RODA -->
-
-    <div class="wheel-area">
-
-        <div class="wheel-wrapper">
-
-            <div class="pointer"></div>
-
-            <canvas id="wheel"></canvas>
-
-        </div>
-
-
-        <button
-            id="spinButton"
-            onclick="girar()">
-
-            🎡 GIRAR
-
-        </button>
-
-
-        <div class="participants-info">
-
-            Todos os participantes estão registrados.
-
-        </div>
-
+    <div class="loading-user" id="loadingUser">
+        Preparando participantes...
     </div>
-
-
-    <!-- ÁREA PARA CARREGAR NOMES -->
-
-    <details class="admin">
-
-        <summary>
-            ⚙️ Gerenciar participantes
-        </summary>
-
-        <textarea
-            id="namesInput"
-            placeholder="Cole os participantes aqui, um por linha...">
-        </textarea>
-
-        <button
-            class="load-button"
-            onclick="carregarParticipantes()">
-
-            CARREGAR PARTICIPANTES
-
-        </button>
-
-    </details>
 
 </div>
 
+<div class="loaded" id="loaded">
+    <strong>✅ PARTICIPANTES CARREGADOS</strong>
+</div>
 
-<!-- RESULTADO -->
+<div class="wheel-area" id="wheelArea">
 
-<div
-    class="overlay"
-    id="overlay">
+    <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="wheel"></canvas>
+    </div>
+
+    <button id="spinButton" onclick="girar()">
+        🎡 GIRAR
+    </button>
+
+    <div class="post">
+        📷 <a href="#" onclick="return false;">
+        Participantes registrados
+        </a>
+    </div>
+
+</div>
+
+</div>
+
+<div class="overlay" id="overlay">
 
     <div class="result">
 
-        <div class="trophy">
-            🏆
-        </div>
+        <div class="trophy">🏆</div>
 
         <h2>
-            PARTICIPANTE ELEGÍVEL
+            PARABÉNNNNSSSSSSS
         </h2>
 
-        <div
-            class="winner"
-            id="winner">
+        <div class="winner">
+            @cokaa__7
         </div>
 
-        <div class="congratulations">
-
-            Parabéns! 🎉
-
-        </div>
-
-        <button
-            class="close-button"
-            onclick="fecharResultado()">
-
+        <button class="close" onclick="fecharResultado()">
             FECHAR
-
         </button>
 
     </div>
 
 </div>
 
-
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
+/* =========================================================
+   PARTICIPANTES
+   ========================================================= */
 
-/*
-   PARABENSSSSSSS.
-*/
+const lista = `
+globalworkhr
+josias.avila
+jhocelyramos
+evansvertical
+lu.macielrs
+angelodriver_
+lorena_oliramos
+gabanjoss
+detalheeuropeu
+raizenestradeiro
+ciceromartinsda693
+cokaa__7
+igor_nazareth
+simeony.c
+sirflavio
+higor.costa.792
+pedrao_1927
+aninha.apc
+_maricoota_
+vineira.m
+ricardoluiz33
+everlymoraes
+keilak30
+leonardo160189
+andresantos_ofcl
+_gilmarcosta
+diegocamargo1153
+doouglass_
+neves25robert
+welingtonblogueirinhochannel
+d9ferreira
+fabianofla15
+deusquemesustenta
+_randes
+rodrigo.henrique86
+eliabe.rodrigues2000
+paulomarra1982
+diasednei
+willianpinheiro48
+editonesfreire
+pereiradebora717615
+real.thomaskeen
+lsdiego86
+Diego86
+s.cruz10
+jcs.correa
+bigjeff188
+esteyllon_16
+werdjonny
+shirleimendessoutlook.com_
+zzero.importss
+andrepassos047
+abimaelalexandresouza
+Abisk8
+misacklim4
+moraiaparecidodivinomartins
+bmwe.369625gp
+cassio.miranda99
+ranch.wc
+WC
+bayaninha_chofferdecaminhao
+alisson_flogs285
+bernardoaguiar2021
+presenca_tem_cheiro
+Prime.essence
+eduardosilva.06
+jefersonramos231
+nuno_graveonbass
+rodrigueseduardomarcelo
+eduardofeitosafacanha
+iury_rocha7
+pivett_freitas
+igor_o_baiano_ofc
+targino2021
+marcelo_cardoso000
+grokustar
+charlesprado88
+rlsimbativel
+megamaquinasrental
+marcoscoutof
+jonatasrodriguessantos
+vainijoao
+casalqueacelera
+sb.saraivaz
+sb_02
+vattuzi
+diegopiu_speed
+juliana.bandeira.1213
+pauloscfreitas
+davidafreitas
+jefterpmoreira
+julyanabbastos
+antenorvieirdealmeida
+bastellidiego
+rodolfosantos1504
+baraunaruy
+gabriel.lucena.swtz
+marcondes_bigfrog
+maxwell64687
+kderudo.jhon
+junior_muniz41
+lucaas_sfc
+bruno_caeetano
+allex_william_machado
+samueljasmine581
+junin_chofer_ciclista
+natofernandess
+algarvepelonossoolhar
+francinete.cavalcante2015
+igor_tavareslima
+zieglerdione
+nanda_leite85
+abencoado_nery
+wellison_silva_
+alexandrolimapt
+cleusa_ximendess
+leandrogomesxavier
+severinoferreirarogerio
+davidpaesof
+ffbda
+Flavio
+georgea.oliveira
+amaury_marcelo
+jgcrockembach389
+caroline_vitoria91
+jerfeson_cardoso
+truckdriverdebora_
+robertoomooreira
+kemuel_998
+gomeschinha
+i.c_001
+adriana_santoscosta
+william_alegria
+creb1m
+usalexandrelessa
+djalexsoares
+alexfeliciano_igp
+dr.douglashivens
+karlitos_pelaito
+junior_01460
+kleandrof
+herbertmeireles
+m4nuu_99
+jonas.57m
+o_jovem_carreteiro_
+emlj.br
+samuelronald2025
+daniel.piresdossantos
+kowalskdamer
+rodolfodiasguedes
+matheus_evo
+amiltonclaudino
+willams_campos
+samuca_sousa
+kellen_rodrigues_
+rrmarcusrr
+grupomercosuleamigos
+juniormotoristaoficila
+marezaaraujo
+jessica.vaz42035
+bruninporka
+waldomirorodriguesjunior0805
+janaina_amarantee
+denny_olliver_ofc
+leosilva_x1k
+danylo_santos161
+alan.aguiaar
+rosaliaoliveira307
+johnkelwyn
+suelenpradoof
+rodrigues.sa90
+ever.son547
+carlos_212014
+valdemir_prado
+erickscoimbra
+rodrigorocha12381
+marildorodrigopaulino
+f_lopes2302
+claudirfermino
+saimoncavalcante88
+wildson.santos.33
+moreiradhaiane
+roquim_78
+rafaelbruno1984
+rafhael_r9
+alone_shersingh
+paulohenrriquepontes
+weekend_piscina
+eduardo5077santos
+paullomartinsjr
+andresanttos94
+rickmotora1
+jhonypatriota
+_caju_ville_excursoes_excursoe
+ricknunes690
+junioor__carvaalho
+eusoumaikegalvao
+georgesilva791
+tiagofreitas0808
+eduardo.j.diegues
+guguu_037
+vanderson_lins
+raphaela_lindy
+thalissonhonoratoo
+vestiariofemenino
+johab_cruz
+lucas.marcos.58555
+ogustavotimm
+soni_carreteira
+victorcampos021525
+valdecirdelimabuffalo
+rafaelsilva915r
+eduardodiaspfilho
+jefhy.reis
+liliam_pri
+o_bertoldo1
+fantasma
+marcospaulo_rosrio
+lucasgustavo6768
+ludmilahsm
+faellimaoficial
+luiz_henrique_hs
+caioiorio.png
+evandro06755
+sergio596ramos
+nataljosima
+lailtontelemaco
+owellingtoncantor
+marcoseliezer_sc
+carlos_du_silva22
+alinetiede
+pirettinha_rhubianny
+_mauriciopj
+le_goncalvess
+brunotrucker25
+Bruno
+eaebrunaoo
+veridianny_barbosa
+pl_mathias_
+Mathias
+helio_ubatuba
+jonao_piracicabanoeuropa
+jhonny_volgado22
+viniciusmsr
+auda_lice
+j.victor_nascimento_
+eu_rickpapito
+dsa_sidney
+maxyluciano23
+tiagof00
+keyla19926
+marrentinha.costa26
+marcos.antoniojm
+gerciellle
+Gercielle
+marcus.valentimtorres
+elcio.moacir.16
+tayrone.britox
+Tayrone.britox
+radiologiaexplorer
+casal_brtruck
+jedilanio_
+Edilanio
+c.e.msouza
+guinaguinamendes
+rudolfoalberto
+bruno_ley_silva
+jpdriver_pb
+allinne_24
+jeanmorenoh
+Jean
+leolobato_02
+motta.77
+carlosbozzaneto
+jael_wanzeler
+willams.1992
+aline20019
+adriano.barbosa.10441
+gabiitaqui2
+driversammyg
+SAM
+eltonresplandes
+brasilthiago
+faeldias_oficial
+fb.coutinho
+danilosilvarithely1
+carolsampaioterapia
+sebastiao.prado.9003
+mvieiramvs1981
+aladdin_samir
+wanderleydasilvaconstantino
+gabrielfernandopt
+isaah_jung
+rafael_1431
+bruce_joceli
+ferreira_rodriguez
+lili.silva_18
+o_lenno_
+henrique_lane
+macilenebarbosa2019
+tedabliotoebe
+guilherme_mntz
+carlosroberto.as
+brancomonteirou
+galvaomanga
+mylaolyver
+jonatasfoia2
+edson_luis_dill
+rivisouzaloureiro
+gecy.galaxia
+Gecy
+ir_duartee
+wyckson_
+rmarcia13
+qra_agoniada
+marcosandre.assu
+davih_faray_vp
+isaaclucena1d1
+jose.camoes.73
+bispo_marcoaraujo
+mayconchagass
+kalinekaaah
+oliveiraelizandrodavitoria
+thamy.halabi
+carlinhosemfronteiras
+Carlinhosemfronteiras
+cassiopontes081
+mandinha_2311
+carolferrarifernandes
+maerciozebedeu
+miller.albuquerque
+moretto_neto
+adrianovoador
+s.ademilso
+jordessonbrito
+rangel.rrz12
+nosretep_
+eversonmachado.28
+braga_br_153
+adolffsousa
+raphaell.mendes
+lunalovegood.miau
+leitesouzafabiola
+shirley.ssr
+vale.sampaio
+_santooscaa
+rafaeldejesusator
+jhonatanrodriguesdantas
+imperadorj_
+alv3s_380
+instrutorluis_costa
+valmirr.santos.562
+maikiel_w
+Maikiel
+heliobarbosa15
+felipegpsouza
+regivaldomorais04
+jamers_silva
+Jjamerson_Silva
+thaisvalentimtvt
+james_ronick_almeida_machado
+lucianomota8460
+lyndallleite
+lucaxfelix_
+biaaanjos_
+djunioalvessantos
+marcionunesdesouzamacedo
+mihh.luiza
+dioupillon
+waltinho1192
+betosilva77777
+paulo__ricardo_santana
+gustavocaiafa
+tiagodantas2015
+kaka45.123
+kaarlos
+faabres
+felipepereira091179
+escolaaberta_ead
+kevinqueiroz
+Wesley
+rodrigo.brito.7374
+francelinofelipe10
+andredias.ce
+vettervilson
+jhonkelvinn_
+silsirleide
+taillesbruno
+emanoellimax
+oswaldo_gng028
+Oswaldo
+andre.pin
+meujael36
+luciano__gomess
+henrique_pablo01
+carlos_ningre_7even
+tiago_justino
+lukasbabydoge
+odai.r7214
+augusto.chaves50
+vinicius.guirra.19
+iura_mattos
+santoswellingtontony
+SantosWellingtonTony
+fabiinho358
+`;
+
+let participantes = lista
+    .split(/\r?\n/)
+    .map(x => x.trim())
+    .filter(Boolean);
 
 const PARTICIPANTE_ELEGIVEL = "cokaa__7";
 
+const total = participantes.length;
 
-/* =====================================================
-   VARIÁVEIS
-===================================================== */
-
-let participantes = [];
-
-let canvas =
-    document.getElementById("wheel");
-
-let ctx =
-    canvas.getContext("2d");
-
-let rotation = 0;
-
-let girando = false;
+document.getElementById("total").textContent = total;
+document.getElementById("totalLoading").textContent = total;
 
 
-/* =====================================================
-   CANVAS
-===================================================== */
+/* =========================================================
+   CARREGAMENTO
+   ========================================================= */
 
-function ajustarCanvas() {
+let carregados = 0;
 
-    const tamanho =
-        canvas.parentElement.clientWidth;
+function carregarVisualmente(){
 
-    const dpr =
-        window.devicePixelRatio || 1;
+    if(carregados >= total){
 
-    canvas.width =
-        tamanho * dpr;
+        document.getElementById("progress").style.width = "100%";
+        document.getElementById("loadedCount").textContent = total;
+        document.getElementById("loadingUser").textContent =
+            "Todos os participantes foram carregados.";
 
-    canvas.height =
-        tamanho * dpr;
+        setTimeout(() => {
 
-    canvas.style.width =
-        tamanho + "px";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("loaded").style.display = "block";
+            document.getElementById("wheelArea").style.display = "flex";
 
-    canvas.style.height =
-        tamanho + "px";
+            ajustarCanvas();
 
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-    desenharRoda();
-}
-
-
-/* =====================================================
-   CARREGAR PARTICIPANTES
-===================================================== */
-
-function carregarParticipantes() {
-
-    const texto =
-        document.getElementById(
-            "namesInput"
-        ).value;
-
-    participantes =
-        texto
-        .split(/\r?\n/)
-        .map(nome => nome.trim())
-        .filter(nome => nome !== "");
-
-    /*
-       Remove duplicados
-    */
-
-    participantes =
-        [...new Set(participantes)];
-
-
-    document.getElementById(
-        "total"
-    ).textContent =
-        participantes.length;
-
-
-    desenharRoda();
-
-}
-
-
-/* =====================================================
-   DESENHAR RODA
-===================================================== */
-
-function desenharRoda() {
-
-    const tamanho =
-        canvas.parentElement.clientWidth;
-
-    if (!tamanho) return;
-
-
-    ctx.clearRect(
-        0,
-        0,
-        tamanho,
-        tamanho
-    );
-
-
-    const centro =
-        tamanho / 2;
-
-    const raio =
-        tamanho / 2 - 8;
-
-
-    /* =====================
-       SEM PARTICIPANTES
-    ===================== */
-
-    if (participantes.length === 0) {
-
-        ctx.beginPath();
-
-        ctx.arc(
-            centro,
-            centro,
-            raio,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            "#151515";
-
-        ctx.fill();
-
-        ctx.strokeStyle =
-            "#333";
-
-        ctx.lineWidth = 2;
-
-        ctx.stroke();
-
-
-        ctx.fillStyle =
-            "#777";
-
-        ctx.font =
-            "bold 18px Arial";
-
-        ctx.textAlign =
-            "center";
-
-        ctx.textBaseline =
-            "middle";
-
-        ctx.fillText(
-            "CARREGUE OS NOMES",
-            centro,
-            centro
-        );
+        }, 900);
 
         return;
     }
 
+    carregados++;
 
-    const total =
-        participantes.length;
+    document.getElementById("loadedCount").textContent = carregados;
 
-    const angulo =
-        Math.PI * 2 / total;
+    document.getElementById("progress").style.width =
+        ((carregados / total) * 100) + "%";
 
+    document.getElementById("loadingUser").textContent =
+        "@" + participantes[carregados - 1];
 
-    /* =====================
-       CORES
-    ===================== */
+    let velocidade = total > 350 ? 12 : 20;
 
-    const cores = [
-        "#ffffff",
-        "#111111"
-    ];
+    setTimeout(carregarVisualmente, velocidade);
+}
 
 
-    for (
-        let i = 0;
-        i < total;
-        i++
-    ) {
+/* =========================================================
+   ROLETA
+   ========================================================= */
 
-        const inicio =
-            rotation +
-            i * angulo;
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
 
-        const fim =
-            inicio + angulo;
+let rotation = 0;
+let girando = false;
 
+function ajustarCanvas(){
+
+    const tamanho = canvas.parentElement.clientWidth;
+
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = tamanho * dpr;
+    canvas.height = tamanho * dpr;
+
+    canvas.style.width = tamanho + "px";
+    canvas.style.height = tamanho + "px";
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    desenharRoda();
+}
+
+
+function desenharRoda(){
+
+    const tamanho = canvas.parentElement.clientWidth;
+
+    if(!tamanho) return;
+
+    ctx.clearRect(0,0,tamanho,tamanho);
+
+    const centro = tamanho / 2;
+    const raio = tamanho / 2 - 8;
+
+    const totalParticipantes = participantes.length;
+    const angulo = Math.PI * 2 / totalParticipantes;
+
+    const cores = ["#ffffff","#111111"];
+
+    for(let i=0;i<totalParticipantes;i++){
+
+        const inicio = rotation + i * angulo;
+        const fim = inicio + angulo;
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            centro,
-            centro
-        );
+        ctx.moveTo(centro,centro);
 
         ctx.arc(
             centro,
@@ -857,71 +876,39 @@ function desenharRoda() {
 
         ctx.closePath();
 
-
-        ctx.fillStyle =
-            cores[i % 2];
-
+        ctx.fillStyle = cores[i % 2];
         ctx.fill();
 
-
-        ctx.strokeStyle =
-            "#333";
-
-        ctx.lineWidth =
-            0.7;
-
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = .5;
         ctx.stroke();
 
-
         /*
-           Se houver poucos participantes,
-           mostra os nomes dentro da roda.
-        */
+         * Com centenas de nomes não colocamos
+         * todos os textos dentro da roda,
+         * pois ficariam ilegíveis.
+         */
 
-        if (total <= 60) {
+        if(totalParticipantes <= 60){
 
             ctx.save();
 
-            ctx.translate(
-                centro,
-                centro
-            );
+            ctx.translate(centro,centro);
 
-            ctx.rotate(
-                inicio +
-                angulo / 2
-            );
+            ctx.rotate(inicio + angulo/2);
 
-            ctx.textAlign =
-                "right";
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
 
-            ctx.textBaseline =
-                "middle";
-
-            ctx.font =
-                "10px Arial";
-
+            ctx.font = "10px Arial";
 
             ctx.fillStyle =
-                i % 2 === 0
-                    ? "#000"
-                    : "#fff";
+                i % 2 === 0 ? "#000" : "#fff";
 
+            let nome = participantes[i];
 
-            let nome =
-                participantes[i];
-
-
-            if (nome.length > 14) {
-
-                nome =
-                    nome.substring(
-                        0,
-                        14
-                    ) + "...";
-
-            }
-
+            if(nome.length > 14)
+                nome = nome.substring(0,14) + "...";
 
             ctx.fillText(
                 nome,
@@ -929,17 +916,10 @@ function desenharRoda() {
                 0
             );
 
-
             ctx.restore();
-
         }
-
     }
 
-
-    /* =====================
-       CÍRCULO CENTRAL
-    ===================== */
 
     ctx.beginPath();
 
@@ -951,216 +931,122 @@ function desenharRoda() {
         Math.PI * 2
     );
 
-    ctx.fillStyle =
-        "#050505";
-
+    ctx.fillStyle = "#050505";
     ctx.fill();
 
-
-    ctx.strokeStyle =
-        "#ffffff";
-
+    ctx.strokeStyle = "#fff";
     ctx.lineWidth = 2;
-
     ctx.stroke();
 
-
-    ctx.fillStyle =
-        "#ffffff";
-
-    ctx.font =
-        "bold 12px Arial";
-
-    ctx.textAlign =
-        "center";
-
-    ctx.textBaseline =
-        "middle";
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
 
     ctx.fillText(
         "SORTEIO",
         centro,
         centro
     );
-
 }
 
 
-/* =====================================================
+/* =========================================================
    GIRAR
-===================================================== */
+   ========================================================= */
 
-function girar() {
+function girar(){
 
-    if (girando)
-        return;
+    if(girando) return;
 
+    if(!participantes.length) return;
 
-    if (participantes.length === 0) {
+    const existe = participantes.some(
+        nome =>
+        nome.toLowerCase() ===
+        PARTICIPANTE_ELEGIVEL.toLowerCase()
+    );
 
-        alert(
-            "Carregue os participantes primeiro."
-        );
-
-        return;
-
-    }
-
-
-    /*
-       Confirma que o participante elegível
-       está entre os participantes.
-    */
-
-    const existe =
-        participantes.some(
-            nome =>
-                nome.toLowerCase() ===
-                PARTICIPANTE_ELEGIVEL.toLowerCase()
-        );
-
-
-    if (!existe) {
+    if(!existe){
 
         alert(
             "O participante elegível não está na lista."
         );
 
         return;
-
     }
-
 
     girando = true;
 
+    document.getElementById("spinButton").disabled = true;
 
-    document.getElementById(
-        "spinButton"
-    ).disabled = true;
+    const voltas = 9 + Math.random() * 4;
 
+    const duracao = 7000;
 
-    /*
-       Animação da roda.
-    */
+    const inicioTempo = performance.now();
 
-    const voltas =
-        9 + Math.random() * 4;
+    const rotacaoInicial = rotation;
 
 
-    const duracao =
-        7000;
+    function animar(tempo){
 
-
-    const inicioTempo =
-        performance.now();
-
-
-    const rotacaoInicial =
-        rotation;
-
-
-    function animar(tempo) {
-
-        const progresso =
-            Math.min(
-                (tempo - inicioTempo) /
-                duracao,
-                1
-            );
-
-
-        /*
-           Ease-out
-        */
+        const progresso = Math.min(
+            (tempo - inicioTempo) / duracao,
+            1
+        );
 
         const ease =
-            1 -
-            Math.pow(
-                1 - progresso,
-                4
-            );
-
+            1 - Math.pow(1 - progresso,4);
 
         rotation =
             rotacaoInicial +
-            voltas *
-            Math.PI *
-            2 *
-            ease;
-
+            voltas * Math.PI * 2 * ease;
 
         desenharRoda();
 
+        if(progresso < 1){
 
-        if (progresso < 1) {
+            requestAnimationFrame(animar);
 
-            requestAnimationFrame(
-                animar
-            );
-
-        } else {
+        }else{
 
             girando = false;
-
 
             document.getElementById(
                 "spinButton"
             ).disabled = false;
 
-
             setTimeout(
                 revelarResultado,
                 800
             );
-
         }
-
     }
 
-
-    requestAnimationFrame(
-        animar
-    );
-
+    requestAnimationFrame(animar);
 }
 
 
-/* =====================================================
-   REVELAR
-===================================================== */
+/* =========================================================
+   RESULTADO
+   ========================================================= */
 
-function revelarResultado() {
-
-    document.getElementById(
-        "winner"
-    ).textContent =
-        "@" +
-        PARTICIPANTE_ELEGIVEL;
-
+function revelarResultado(){
 
     document.getElementById(
         "overlay"
     ).classList.add("show");
-
 }
 
 
-/* =====================================================
-   FECHAR
-===================================================== */
-
-function fecharResultado() {
+function fecharResultado(){
 
     document.getElementById(
         "overlay"
     ).classList.remove("show");
-
 }
 
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
 
 window.addEventListener(
     "resize",
@@ -1168,7 +1054,9 @@ window.addEventListener(
 );
 
 
-ajustarCanvas();
+/* COMEÇAR */
+
+carregarVisualmente();
 
 </script>
 
