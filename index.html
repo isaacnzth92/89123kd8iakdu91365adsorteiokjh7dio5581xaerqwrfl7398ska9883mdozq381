@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorteio Instagram</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* =========================
+   TELA INICIAL
+========================= */
+
+#startScreen {
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top, #252525 0%, #090909 45%, #000 100%);
+}
+
+.start-card {
+    width: 650px;
+    max-width: 90%;
+    background: #151515;
+    border: 1px solid #303030;
+    border-radius: 18px;
+    padding: 55px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.7);
+}
+
+.logo {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.start-card h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 45px;
+    font-size: 17px;
+}
+
+.start-card h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.description {
+    color: #999;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    height: 58px;
+    background: #090909;
+    border: 1px solid #444;
+    border-radius: 9px;
+    color: white;
+    padding: 0 18px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #777;
+}
+
+.main-button {
+    width: 100%;
+    height: 58px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 9px;
+    background: white;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-button:hover {
+    background: #ddd;
+}
+
+/* =========================
+   PROCESSAMENTO
+========================= */
+
+#processingScreen,
+#loadingScreen {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background:
+        radial-gradient(circle at center, #171717 0%, #050505 55%, #000 100%);
+}
+
+.loader {
+    width: 75px;
+    height: 75px;
+    border: 6px solid #333;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spinLoader 1s linear infinite;
+    margin-bottom: 30px;
+}
+
+@keyframes spinLoader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.process-title {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.process-message {
+    color: #aaa;
+    font-size: 18px;
+    min-height: 28px;
+}
+
+.process-bar-container {
+    width: 600px;
+    max-width: 80%;
+    height: 10px;
+    background: #222;
+    border-radius: 20px;
+    margin-top: 35px;
+    overflow: hidden;
+}
+
+.process-bar {
+    height: 100%;
+    width: 0%;
+    background: white;
+    border-radius: 20px;
+    transition: width .15s linear;
+}
+
+/* =========================
+   LEITURA DOS PARTICIPANTES
+========================= */
+
+.loading-content {
+    width: 850px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.loading-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.loading-subtitle {
+    color: #999;
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.current-user {
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    min-height: 48px;
+    word-break: break-word;
+}
+
+.counter {
+    font-size: 22px;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.loading-bar-container {
+    width: 100%;
+    height: 14px;
+    background: #222;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    width: 0%;
+    height: 100%;
+    background: white;
+    border-radius: 20px;
+}
+
+.percentage {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #aaa;
+}
+
+.recent-names {
+    margin-top: 35px;
+    height: 120px;
+    overflow: hidden;
+    color: #555;
+    line-height: 30px;
+    font-size: 16px;
+}
+
+/* =========================
+   RODA
+========================= */
+
+#gameScreen {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: #000;
+}
+
+.game-title {
+    position: absolute;
+    top: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.game-status {
+    position: absolute;
+    bottom: 25px;
+    font-size: 17px;
+    color: #888;
+}
+
+.wheel-wrapper {
+    position: relative;
+    width: 760px;
+    height: 760px;
+    max-width: 75vh;
+    max-height: 75vh;
+}
+
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.pointer {
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 45px solid white;
+    z-index: 5;
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,.7));
+}
+
+.spin-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    border: 8px solid #111;
+    background: white;
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 4;
+    box-shadow: 0 0 30px rgba(255,255,255,.15);
+}
+
+.spin-button:disabled {
+    cursor: not-allowed;
+    opacity: .6;
+}
+
+/* =========================
+   RESULTADO
+========================= */
+
+#resultScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.96);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.result-title {
+    font-size: 62px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 35px;
+    animation: resultPop .7s ease-out;
+}
+
+.result-user {
+    font-size: 75px;
+    font-weight: 900;
+    text-align: center;
+    animation: resultPop .9s ease-out;
+}
+
+@keyframes resultPop {
+    0% {
+        transform: scale(.3);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media(max-width: 900px) {
+
+    .wheel-wrapper {
+        width: 650px;
+        height: 650px;
+    }
+
+    .result-title {
+        font-size: 42px;
+    }
+
+    .result-user {
+        font-size: 55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     TELA INICIAL
+========================= -->
+
+<section id="startScreen" class="screen active">
+
+    <div class="start-card">
+
+        <div class="logo">◉</div>
+
+        <h1>Sorteio Instagram</h1>
+
+        <p class="subtitle">
+            Prepare seu sorteio de forma rápida e simples
+        </p>
+
+        <h2>Insira o link da publicação</h2>
+
+        <p class="description">
+            Cole abaixo o link da publicação do Instagram para carregar
+            os participantes do sorteio.
+        </p>
+
+        <input
+            type="text"
+            id="urlInput"
+            placeholder="https://www.instagram.com/p/..."
+        >
+
+        <button class="main-button" onclick="iniciarSorteio()">
+            ENVIAR
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROCESSAMENTO
+========================= -->
+
+<section id="processingScreen" class="screen">
+
+    <div class="loader"></div>
+
+    <div class="process-title">
+        Processando sorteio
+    </div>
+
+    <div id="processingMessage" class="process-message">
+        Conectando à publicação...
+    </div>
+
+    <div class="process-bar-container">
+        <div id="processingProgress" class="process-bar"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LEITURA
+========================= -->
+
+<section id="loadingScreen" class="screen">
+
+    <div class="loading-content">
+
+        <div class="loading-title">
+            Carregando participantes
+        </div>
+
+        <div class="loading-subtitle">
+            Aguarde enquanto os participantes são preparados...
+        </div>
+
+        <div id="loadingUser" class="current-user">
+            Preparando...
+        </div>
+
+        <div class="counter">
+            <span id="loadedCount">0</span>
+            /
+            <span id="totalLoading">0</span>
+        </div>
+
+        <div class="loading-bar-container">
+            <div id="loadingProgress" class="loading-bar"></div>
+        </div>
+
+        <div id="loadingPercent" class="percentage">
+            0%
+        </div>
+
+        <div id="recentNames" class="recent-names"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RODA
+========================= -->
+
+<section id="gameScreen" class="screen">
+
+    <div class="game-title">
+        SORTEIO INSTAGRAM
+    </div>
+
+    <div class="wheel-wrapper">
+
+        <div class="pointer"></div>
+
+        <canvas id="wheelCanvas" width="1000" height="1000"></canvas>
+
+        <button
+            id="spinButton"
+            class="spin-button"
+            onclick="girar()"
+            disabled
+        >
+            GIRAR
+        </button>
+
+    </div>
+
+    <div id="gameStatus" class="game-status">
+        Preparando participantes...
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RESULTADO
+========================= -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="result-title">
+        🏆 PARABÉNNNNSSSSSSS
+    </div>
+
+    <div class="result-user">
+        @cokaa__7
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   PARTICIPANTES
+===================================================== */
+
+const lista = `
+globalworkhr
+josias.avila
+jhocelyramos
+evansvertical
+lu.macielrs
+angelodriver_
+lorena_oliramos
+gabanjoss
+detalheeuropeu
+raizenestradeiro
+ciceromartinsda693
+cokaa__7
+igor_nazareth
+simeony.c
+sirflavio
+higor.costa.792
+pedrao_1927
+aninha.apc
+_maricoota_
+vineira.m
+ricardoluiz33
+everlymoraes
+keilak30
+leonardo160189
+andresantos_ofcl
+_gilmarcosta
+diegocamargo1153
+doouglass_
+neves25robert
+welingtonblogueirinhochannel
+d9ferreira
+fabianofla15
+deusquemesustenta
+_randes
+rodrigo.henrique86
+eliabe.rodrigues2000
+paulomarra1982
+diasednei
+willianpinheiro48
+editonesfreire
+pereiradebora717615
+real.thomaskeen
+lsdiego86
+Diego86
+s.cruz10
+jcs.correa
+bigjeff188
+esteyllon_16
+werdjonny
+shirleimendessoutlook.com_
+zzero.importss
+andrepassos047
+abimaelalexandresouza
+Abisk8
+misacklim4
+moraiaparecidodivinomartins
+bmwe.369625gp
+cassio.miranda99
+ranch.wc
+WC
+bayaninha_chofferdecaminhao
+alisson_flogs285
+bernardoaguiar2021
+presenca_tem_cheiro
+Prime.essence
+eduardosilva.06
+jefersonramos231
+nuno_graveonbass
+rodrigueseduardomarcelo
+eduardofeitosafacanha
+iury_rocha7
+pivett_freitas
+igor_o_baiano_ofc
+targino2021
+marcelo_cardoso000
+grokustar
+charlesprado88
+rlsimbativel
+megamaquinasrental
+marcoscoutof
+jonatasrodriguessantos
+vainijoao
+casalqueacelera
+sb.saraivaz
+sb_02
+vattuzi
+diegopiu_speed
+juliana.bandeira.1213
+pauloscfreitas
+davidafreitas
+jefterpmoreira
+julyanabbastos
+antenorvieirdealmeida
+bastellidiego
+rodolfosantos1504
+baraunaruy
+gabriel.lucena.swtz
+marcondes_bigfrog
+maxwell64687
+kderudo.jhon
+junior_muniz41
+lucaas_sfc
+bruno_caeetano
+allex_william_machado
+samueljasmine581
+junin_chofer_ciclista
+natofernandess
+algarvepelonossoolhar
+francinete.cavalcante2015
+igor_tavareslima
+zieglerdione
+nanda_leite85
+abencoado_nery
+wellison_silva_
+alexandrolimapt
+cleusa_ximendess
+leandrogomesxavier
+severinoferreirarogerio
+davidpaesof
+ffbda
+Flavio
+georgea.oliveira
+amaury_marcelo
+jgcrockembach389
+caroline_vitoria91
+jerfeson_cardoso
+truckdriverdebora_
+robertoomooreira
+kemuel_998
+gomeschinha
+i.c_001
+adriana_santoscosta
+william_alegria
+creb1m
+usalexandrelessa
+djalexsoares
+alexfeliciano_igp
+dr.douglashivens
+karlitos_pelaito
+junior_01460
+kleandrof
+herbertmeireles
+m4nuu_99
+jonas.57m
+o_jovem_carreteiro_
+emlj.br
+samuelronald2025
+daniel.piresdossantos
+kowalskdamer
+rodolfodiasguedes
+matheus_evo
+amiltonclaudino
+willams_campos
+samuca_sousa
+kellen_rodrigues_
+rrmarcusrr
+grupomercosuleamigos
+juniormotoristaoficila
+marezaaraujo
+jessica.vaz42035
+bruninporka
+waldomirorodriguesjunior0805
+janaina_amarantee
+denny_olliver_ofc
+leosilva_x1k
+danylo_santos161
+alan.aguiaar
+rosaliaoliveira307
+johnkelwyn
+suelenpradoof
+rodrigues.sa90
+ever.son547
+carlos_212014
+valdemir_prado
+erickscoimbra
+rodrigorocha12381
+marildorodrigopaulino
+f_lopes2302
+claudirfermino
+saimoncavalcante88
+wildson.santos.33
+moreiradhaiane
+roquim_78
+rafaelbruno1984
+rafhael_r9
+alone_shersingh
+paulohenrriquepontes
+weekend_piscina
+eduardo5077santos
+paullomartinsjr
+andresanttos94
+rickmotora1
+jhonypatriota
+_caju_ville_excursoes_excursoe
+ricknunes690
+junioor__carvaalho
+eusoumaikegalvao
+georgesilva791
+tiagofreitas0808
+eduardo.j.diegues
+guguu_037
+vanderson_lins
+raphaela_lindy
+thalissonhonoratoo
+vestiariofemenino
+johab_cruz
+lucas.marcos.58555
+ogustavotimm
+soni_carreteira
+victorcampos021525
+valdecirdelimabuffalo
+rafaelsilva915r
+eduardodiaspfilho
+jefhy.reis
+liliam_pri
+o_bertoldo1
+fantasma
+marcospaulo_rosrio
+lucasgustavo6768
+ludmilahsm
+faellimaoficial
+luiz_henrique_hs
+caioiorio.png
+evandro06755
+sergio596ramos
+nataljosima
+lailtontelemaco
+owellingtoncantor
+marcoseliezer_sc
+carlos_du_silva22
+alinetiede
+pirettinha_rhubianny
+_mauriciopj
+le_goncalvess
+brunotrucker25
+Bruno
+eaebrunaoo
+veridianny_barbosa
+pl_mathias_
+Mathias
+helio_ubatuba
+jonao_piracicabanoeuropa
+jhonny_volgado22
+viniciusmsr
+auda_lice
+j.victor_nascimento_
+eu_rickpapito
+dsa_sidney
+maxyluciano23
+tiagof00
+keyla19926
+marrentinha.costa26
+marcos.antoniojm
+gerciellle
+Gercielle
+marcus.valentimtorres
+elcio.moacir.16
+tayrone.britox
+Tayrone.britox
+radiologiaexplorer
+casal_brtruck
+jedilanio_
+Edilanio
+c.e.msouza
+guinaguinamendes
+rudolfoalberto
+bruno_ley_silva
+jpdriver_pb
+allinne_24
+jeanmorenoh
+Jean
+leolobato_02
+motta.77
+carlosbozzaneto
+jael_wanzeler
+willams.1992
+aline20019
+adriano.barbosa.10441
+gabiitaqui2
+driversammyg
+SAM
+eltonresplandes
+brasilthiago
+faeldias_oficial
+fb.coutinho
+danilosilvarithely1
+carolsampaioterapia
+sebastiao.prado.9003
+mvieiramvs1981
+aladdin_samir
+wanderleydasilvaconstantino
+gabrielfernandopt
+isaah_jung
+rafael_1431
+bruce_joceli
+ferreira_rodriguez
+lili.silva_18
+o_lenno_
+henrique_lane
+macilenebarbosa2019
+tedabliotoebe
+guilherme_mntz
+carlosroberto.as
+brancomonteirou
+galvaomanga
+mylaolyver
+jonatasfoia2
+edson_luis_dill
+rivisouzaloureiro
+gecy.galaxia
+Gecy
+ir_duartee
+wyckson_
+rmarcia13
+qra_agoniada
+marcosandre.assu
+davih_faray_vp
+isaaclucena1d1
+jose.camoes.73
+bispo_marcoaraujo
+mayconchagass
+kalinekaaah
+oliveiraelizandrodavitoria
+thamy.halabi
+carlinhosemfronteiras
+Carlinhosemfronteiras
+cassiopontes081
+mandinha_2311
+carolferrarifernandes
+maerciozebedeu
+miller.albuquerque
+moretto_neto
+adrianovoador
+s.ademilso
+jordessonbrito
+rangel.rrz12
+nosretep_
+eversonmachado.28
+braga_br_153
+adolffsousa
+raphaell.mendes
+lunalovegood.miau
+leitesouzafabiola
+shirley.ssr
+vale.sampaio
+_santooscaa
+rafaeldejesusator
+jhonatanrodriguesdantas
+imperadorj_
+alv3s_380
+instrutorluis_costa
+valmirr.santos.562
+maikiel_w
+Maikiel
+heliobarbosa15
+felipegpsouza
+regivaldomorais04
+jamers_silva
+Jjamerson_Silva
+thaisvalentimtvt
+james_ronick_almeida_machado
+lucianomota8460
+lyndallleite
+lucaxfelix_
+biaaanjos_
+djunioalvessantos
+marcionunesdesouzamacedo
+mihh.luiza
+dioupillon
+waltinho1192
+betosilva77777
+paulo__ricardo_santana
+gustavocaiafa
+tiagodantas2015
+kaka45.123
+kaarlos
+faabres
+felipepereira091179
+escolaaberta_ead
+kevinqueiroz
+Wesley
+rodrigo.brito.7374
+francelinofelipe10
+andredias.ce
+vettervilson
+jhonkelvinn_
+silsirleide
+taillesbruno
+emanoellimax
+oswaldo_gng028
+Oswaldo
+andre.pin
+meujael36
+luciano__gomess
+henrique_pablo01
+carlos_ningre_7even
+tiago_justino
+lukasbabydoge
+odai.r7214
+augusto.chaves50
+vinicius.guirra.19
+iura_mattos
+santoswellingtontony
+SantosWellingtonTony
+fabiinho358
+`.trim();
+
+const participantes = lista
+    .split("\n")
+    .map(nome => nome.trim())
+    .filter(nome => nome.length > 0);
+
+const total = participantes.length;
+
+
+/* =====================================================
+   TROCA DE TELAS
+===================================================== */
+
+function mostrarTela(id) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+function iniciarSorteio() {
+
+    const url = document.getElementById("urlInput").value.trim();
+
+    if (!url) {
+
+        alert("Cole o link da publicação do Instagram.");
+
+        return;
+    }
+
+    mostrarTela("processingScreen");
+
+    iniciarProcessamento();
+}
+
+
+/* =====================================================
+   PROCESSAMENTO INICIAL
+===================================================== */
+
+function iniciarProcessamento() {
+
+    const mensagens = [
+        "Conectando à publicação...",
+        "Verificando link...",
+        "Analisando publicação...",
+        "Preparando participantes...",
+        "Organizando dados...",
+        "Finalizando preparação..."
+    ];
+
+    const mensagem = document.getElementById("processingMessage");
+    const barra = document.getElementById("processingProgress");
+
+    const inicio = performance.now();
+    const duracao = 3500;
+
+    function atualizar(agora) {
+
+        const decorrido = agora - inicio;
+
+        let progresso = decorrido / duracao;
+
+        if (progresso > 1) {
+            progresso = 1;
+        }
+
+        barra.style.width = (progresso * 100) + "%";
+
+        const indice = Math.min(
+            mensagens.length - 1,
+            Math.floor(progresso * mensagens.length)
+        );
+
+        mensagem.textContent = mensagens[indice];
+
+        if (progresso < 1) {
+
+            requestAnimationFrame(atualizar);
+
+        } else {
+
+            setTimeout(() => {
+
+                iniciarLeitura();
+
+            }, 400);
+
+        }
+    }
+
+    requestAnimationFrame(atualizar);
+}
+
+
+/* =====================================================
+   LEITURA DOS PARTICIPANTES
+   EXATAMENTE 70 SEGUNDOS
+===================================================== */
+
+function iniciarLeitura() {
+
+    mostrarTela("loadingScreen");
+
+    document.getElementById("totalLoading").textContent = total;
+
+    const usuario = document.getElementById("loadingUser");
+    const contador = document.getElementById("loadedCount");
+    const barra = document.getElementById("loadingProgress");
+    const porcentagem = document.getElementById("loadingPercent");
+    const recentes = document.getElementById("recentNames");
+
+    /*
+       IMPORTANTE:
+
+       O tempo TOTAL é fixado em 70 segundos.
+
+       Não usamos:
+       duracao / quantidade de participantes + setTimeout
+
+       porque isso pode acelerar ou sofrer influência
+       do navegador.
+
+       Aqui usamos performance.now() para medir o tempo
+       real desde o início.
+    */
+
+    const DURACAO_TOTAL = 70000;
+
+    const inicio = performance.now();
+
+    let ultimoIndice = -1;
+
+    function atualizarLeitura(agora) {
+
+        const tempoDecorrido = agora - inicio;
+
+        /*
+           Progresso real de 0 até 1.
+        */
+
+        let progresso = tempoDecorrido / DURACAO_TOTAL;
+
+        if (progresso > 1) {
+            progresso = 1;
+        }
+
+        /*
+           Quantidade correspondente ao tempo.
+        */
+
+        let indice = Math.floor(progresso * total);
+
+        if (indice >= total) {
+            indice = total - 1;
+        }
+
+        /*
+           Atualiza somente quando mudar o participante.
+        */
+
+        if (indice !== ultimoIndice) {
+
+            ultimoIndice = indice;
+
+            const nomeAtual = participantes[indice];
+
+            usuario.textContent = "@" + nomeAtual;
+
+            contador.textContent = Math.min(
+                indice + 1,
+                total
+            );
+
+            /*
+               Mostra os últimos nomes carregados.
+            */
+
+            const inicioRecentes = Math.max(0, indice - 4);
+
+            const ultimos = participantes
+                .slice(inicioRecentes, indice + 1)
+                .map(nome => "@" + nome)
+                .join("<br>");
+
+            recentes.innerHTML = ultimos;
+        }
+
+        /*
+           A BARRA acompanha exatamente os 70 segundos.
+        */
+
+        const porcentagemAtual = progresso * 100;
+
+        barra.style.width = porcentagemAtual + "%";
+
+        porcentagem.textContent =
+            Math.floor(porcentagemAtual) + "%";
+
+
+        /*
+           Enquanto não chegar aos 70 segundos,
+           continua atualizando.
+        */
+
+        if (progresso < 1) {
+
+            requestAnimationFrame(atualizarLeitura);
+
+        } else {
+
+            /*
+               Garante os valores finais.
+            */
+
+            usuario.textContent =
+                "@" + participantes[total - 1];
+
+            contador.textContent = total;
+
+            barra.style.width = "100%";
+
+            porcentagem.textContent = "100%";
+
+            /*
+               Espera um pequeno momento antes da roda.
+            */
+
+            setTimeout(() => {
+
+                mostrarTela("gameScreen");
+
+                document.getElementById("gameStatus").textContent =
+                    "🎉 PARTICIPANTES CARREGADOS!";
+
+                document.getElementById("spinButton").disabled = false;
+
+            }, 1500);
+        }
+    }
+
+    /*
+       COMEÇA A CONTAGEM.
+    */
+
+    requestAnimationFrame(atualizarLeitura);
+}
+
+
+/* =====================================================
+   RODA
+===================================================== */
+
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
+
+const centro = canvas.width / 2;
+const raio = 470;
+
+let anguloAtual = 0;
+let girando = false;
+
+
+/* =====================================================
+   DESENHAR RODA
+===================================================== */
+
+function desenharRoda() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const quantidade = participantes.length;
+
+    const anguloPorParticipante =
+        (Math.PI * 2) / quantidade;
+
+    for (let i = 0; i < quantidade; i++) {
+
+        const inicio =
+            anguloAtual +
+            i * anguloPorParticipante;
+
+        const fim =
+            inicio +
+            anguloPorParticipante;
+
+        ctx.beginPath();
+
+        ctx.moveTo(centro, centro);
+
+        ctx.arc(
+            centro,
+            centro,
+            raio,
+            inicio,
+            fim
+        );
+
+        ctx.closePath();
+
+        /*
+           Alternância preto/cinza.
+        */
+
+        ctx.fillStyle =
+            i % 2 === 0
+                ? "#111"
+                : "#333";
+
+        ctx.fill();
+
+        ctx.strokeStyle = "#666";
+
+        ctx.lineWidth = 1;
+
+        ctx.stroke();
+    }
+
+    /*
+       Borda externa
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        centro,
+        centro,
+        raio,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.strokeStyle = "#fff";
+
+    ctx.lineWidth = 6;
+
+    ctx.stroke();
+}
+
+
+/* =====================================================
+   PRIMEIRO DESENHO
+===================================================== */
+
+desenharRoda();
+
+
+/* =====================================================
+   GIRAR
+===================================================== */
+
+function girar() {
+
+    if (girando) {
+        return;
+    }
+
+    girando = true;
+
+    const botao = document.getElementById("spinButton");
+
+    const status = document.getElementById("gameStatus");
+
+    botao.disabled = true;
+
+    status.textContent =
+        "🔄 PROCESSANDO SORTEIO...";
+
+    /*
+       Pequena pausa antes de começar.
+    */
+
+    setTimeout(() => {
+
+        const inicio = performance.now();
+
+        const duracao = 8500;
+
+        const voltas =
+            10 + Math.random() * 5;
+
+        const anguloInicial = anguloAtual;
+
+        const distancia =
+            voltas * Math.PI * 2;
+
+        function animar(agora) {
+
+            const tempo =
+                agora - inicio;
+
+            let progresso =
+                tempo / duracao;
+
+            if (progresso > 1) {
+                progresso = 1;
+            }
+
+            /*
+               Ease-out.
+            */
+
+            const ease =
+                1 - Math.pow(1 - progresso, 4);
+
+            anguloAtual =
+                anguloInicial +
+                distancia * ease;
+
+            desenharRoda();
+
+            if (progresso < 1) {
+
+                requestAnimationFrame(animar);
+
+            } else {
+
+                status.textContent =
+                    "🎉 SORTEIO FINALIZADO!";
+
+                setTimeout(() => {
+
+                    mostrarResultado();
+
+                }, 1200);
+            }
+        }
+
+        requestAnimationFrame(animar);
+
+    }, 1500);
+}
+
+
+/* =====================================================
+   RESULTADO
+===================================================== */
+
+function mostrarResultado() {
+
+    mostrarTela("resultScreen");
+
+}
+
+</script>
+
+</body>
+</html>
