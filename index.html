@@ -3,905 +3,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Sorteio Instagram</title>
 
 <style>
-
 * {
     box-sizing: border-box;
-}
-
-html,
-body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
 }
 
 body {
-    background: #f5f6f8;
-    color: #171717;
     font-family: Arial, Helvetica, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
 }
 
-
-/* =========================================================
-   TELAS
-========================================================= */
-
 .screen {
-    min-height: 100vh;
     display: none;
+    width: 100vw;
+    height: 100vh;
 }
 
 .screen.active {
     display: flex;
 }
 
-
-/* =========================================================
+/* =========================
    TELA INICIAL
-========================================================= */
+========================= */
 
 #startScreen {
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    background:
+        radial-gradient(circle at top, #252525 0%, #090909 45%, #000 100%);
 }
 
-.start-wrapper {
-    width: 100%;
-    max-width: 720px;
+.start-card {
+    width: 650px;
+    max-width: 90%;
+    background: #151515;
+    border: 1px solid #303030;
+    border-radius: 18px;
+    padding: 55px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.7);
 }
 
 .logo {
     text-align: center;
-    margin-bottom: 35px;
-}
-
-.logo-icon {
-    width: 70px;
-    height: 70px;
-
-    margin: 0 auto 18px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #833ab4,
-            #fd1d1d,
-            #fcb045
-        );
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: white;
-    font-size: 36px;
-    font-weight: bold;
-}
-
-.logo h1 {
-    margin: 0;
-    font-size: 34px;
+    font-size: 48px;
     font-weight: 800;
+    margin-bottom: 12px;
 }
 
-.logo p {
-    margin-top: 10px;
-    color: #777;
+.start-card h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 45px;
     font-size: 17px;
-}
-
-
-.start-card {
-    background: white;
-
-    border-radius: 18px;
-
-    padding: 42px;
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.08);
-
-    border: 1px solid #e8e8e8;
 }
 
 .start-card h2 {
-    margin: 0 0 10px;
-
-    font-size: 25px;
+    font-size: 20px;
+    margin-bottom: 12px;
 }
 
-.start-card .description {
-    color: #777;
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-
-.input-label {
-    display: block;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    margin-bottom: 9px;
-}
-
-.url-input {
-    width: 100%;
-
-    height: 58px;
-
-    border: 1px solid #d7d7d7;
-
-    border-radius: 10px;
-
-    padding: 0 18px;
-
-    font-size: 16px;
-
-    outline: none;
-
-    transition: .2s;
-}
-
-.url-input:focus {
-    border-color: #555;
-
-    box-shadow:
-        0 0 0 3px rgba(0,0,0,.05);
-}
-
-
-.send-button {
-    width: 100%;
-
-    height: 58px;
-
-    margin-top: 18px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background: #111;
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.send-button:hover {
-    background: #292929;
-    transform: translateY(-1px);
-}
-
-
-.security {
-    text-align: center;
-
-    margin-top: 22px;
-
+.description {
     color: #999;
-
-    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   PROCESSAMENTO
-========================================================= */
-
-#processingScreen {
-    align-items: center;
-    justify-content: center;
-
-    background: #f5f6f8;
-}
-
-.processing-card {
-    width: 550px;
-    max-width: 90%;
-
-    background: white;
-
-    border-radius: 18px;
-
-    padding: 50px 45px;
-
-    text-align: center;
-
-    box-shadow:
-        0 15px 45px rgba(0,0,0,.08);
-}
-
-.loader {
-    width: 65px;
-    height: 65px;
-
-    margin: 0 auto 30px;
-
-    border-radius: 50%;
-
-    border: 5px solid #e5e5e5;
-
-    border-top-color: #111;
-
-    animation:
-        spinLoader 1s linear infinite;
-}
-
-.processing-card h2 {
-    margin: 0;
-
-    font-size: 25px;
-}
-
-.processing-message {
-    margin-top: 12px;
-
-    color: #777;
-
-    min-height: 22px;
-}
-
-.processing-bar {
+input {
     width: 100%;
-    height: 8px;
-
-    margin-top: 30px;
-
-    background: #eee;
-
-    border-radius: 10px;
-
-    overflow: hidden;
+    height: 58px;
+    background: #090909;
+    border: 1px solid #444;
+    border-radius: 9px;
+    color: white;
+    padding: 0 18px;
+    font-size: 16px;
+    outline: none;
 }
 
-.processing-progress {
-    width: 0%;
-    height: 100%;
-
-    background: #111;
-
-    transition: width .5s;
+input:focus {
+    border-color: #777;
 }
 
-@keyframes spinLoader {
-
-    to {
-        transform: rotate(360deg);
-    }
-
+.main-button {
+    width: 100%;
+    height: 58px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 9px;
+    background: white;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
+.main-button:hover {
+    background: #ddd;
+}
 
-/* =========================================================
-   SORTEIO
-========================================================= */
+/* =========================
+   PROCESSAMENTO
+========================= */
 
+#processingScreen,
 #loadingScreen {
     align-items: center;
     justify-content: center;
-
-    background: #050505;
-
-    color: white;
-
-    padding: 40px 20px;
+    flex-direction: column;
+    background:
+        radial-gradient(circle at center, #171717 0%, #050505 55%, #000 100%);
 }
 
-.loading-wrapper {
-    width: 850px;
-    max-width: 95%;
+.loader {
+    width: 75px;
+    height: 75px;
+    border: 6px solid #333;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spinLoader 1s linear infinite;
+    margin-bottom: 30px;
+}
 
+@keyframes spinLoader {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.process-title {
+    font-size: 34px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.process-message {
+    color: #aaa;
+    font-size: 18px;
+    min-height: 28px;
+}
+
+.process-bar-container {
+    width: 600px;
+    max-width: 80%;
+    height: 10px;
+    background: #222;
+    border-radius: 20px;
+    margin-top: 35px;
+    overflow: hidden;
+}
+
+.process-bar {
+    height: 100%;
+    width: 0%;
+    background: white;
+    border-radius: 20px;
+    transition: width .15s linear;
+}
+
+/* =========================
+   LEITURA DOS PARTICIPANTES
+========================= */
+
+.loading-content {
+    width: 850px;
+    max-width: 90%;
     text-align: center;
 }
 
 .loading-title {
-    font-size: 34px;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
 
-    font-weight: 900;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 30px;
+.loading-subtitle {
+    color: #999;
+    font-size: 18px;
+    margin-bottom: 40px;
 }
 
 .current-user {
-    height: 95px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #111;
-
-    border: 2px solid #292929;
-
-    border-radius: 15px;
-
-    font-size: 36px;
-
+    font-size: 38px;
     font-weight: bold;
-
-    margin-bottom: 25px;
-
-    overflow: hidden;
+    margin-bottom: 30px;
+    min-height: 48px;
+    word-break: break-word;
 }
 
-.loading-counter {
-    font-size: 25px;
-
-    font-weight: bold;
-
-    margin-bottom: 15px;
+.counter {
+    font-size: 22px;
+    color: #aaa;
+    margin-bottom: 20px;
 }
 
-.progress-container {
+.loading-bar-container {
     width: 100%;
-
-    height: 28px;
-
+    height: 14px;
     background: #222;
-
     border-radius: 20px;
-
     overflow: hidden;
-
-    border: 1px solid #333;
 }
 
-#progress {
+.loading-bar {
     width: 0%;
-
     height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #777777
-        );
-
-    transition: width .15s linear;
+    background: white;
+    border-radius: 20px;
 }
 
-.percent {
-    margin-top: 12px;
-
-    font-size: 20px;
-
+.percentage {
+    margin-top: 15px;
+    font-size: 18px;
     color: #aaa;
 }
 
-.recent-title {
-    margin-top: 32px;
-
-    color: #777;
-
-    font-size: 18px;
-}
-
-#recentNames {
-    margin: 10px auto;
-
-    width: 600px;
-
-    max-width: 100%;
-
-    height: 170px;
-
+.recent-names {
+    margin-top: 35px;
+    height: 120px;
     overflow: hidden;
-
-    text-align: center;
+    color: #555;
+    line-height: 30px;
+    font-size: 16px;
 }
 
-.recent-name {
-    font-size: 18px;
-
-    color: #666;
-
-    padding: 5px;
-}
-
-.recent-name:last-child {
-    color: white;
-
-    font-size: 22px;
-
-    font-weight: bold;
-}
-
-
-/* =========================================================
-   TELA DA RODA
-========================================================= */
+/* =========================
+   RODA
+========================= */
 
 #gameScreen {
+    position: relative;
     align-items: center;
     justify-content: center;
-
-    background: #050505;
-
-    color: white;
-
-    text-align: center;
-
-    padding: 25px;
+    flex-direction: column;
+    background: #000;
 }
 
-.game-wrapper {
-    width: 100%;
-
-    max-width: 1000px;
+.game-title {
+    position: absolute;
+    top: 30px;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .game-status {
-    font-size: 25px;
-
-    font-weight: bold;
-
-    margin-bottom: 22px;
+    position: absolute;
+    bottom: 25px;
+    font-size: 17px;
+    color: #888;
 }
 
-.wheel-area {
+.wheel-wrapper {
     position: relative;
-
-    width: 680px;
-    height: 680px;
-
-    max-width: 72vh;
-    max-height: 72vh;
-
-    margin: auto;
+    width: 760px;
+    height: 760px;
+    max-width: 75vh;
+    max-height: 75vh;
 }
 
-canvas {
+#wheelCanvas {
     width: 100%;
     height: 100%;
-
     display: block;
 }
 
 .pointer {
     position: absolute;
-
-    top: -10px;
-
+    top: -17px;
     left: 50%;
-
     transform: translateX(-50%);
-
     width: 0;
     height: 0;
-
-    border-left: 25px solid transparent;
-
-    border-right: 25px solid transparent;
-
-    border-top: 50px solid white;
-
-    z-index: 10;
-
-    filter:
-        drop-shadow(
-            0 0 8px rgba(255,255,255,.5)
-        );
-}
-
-.center-circle {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%);
-
-    width: 95px;
-    height: 95px;
-
-    background: #111;
-
-    border: 5px solid white;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 45px solid white;
     z-index: 5;
+    filter: drop-shadow(0 4px 5px rgba(0,0,0,.7));
 }
 
 .spin-button {
-    margin-top: 28px;
-
-    padding: 19px 60px;
-
-    border: none;
-
-    border-radius: 12px;
-
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    border: 8px solid #111;
     background: white;
-
     color: black;
-
-    font-size: 25px;
-
-    font-weight: 900;
-
+    font-size: 22px;
+    font-weight: bold;
     cursor: pointer;
-
-    transition: .2s;
-}
-
-.spin-button:hover:not(:disabled) {
-    transform: scale(1.05);
+    z-index: 4;
+    box-shadow: 0 0 30px rgba(255,255,255,.15);
 }
 
 .spin-button:disabled {
-    opacity: .4;
-
     cursor: not-allowed;
+    opacity: .6;
 }
 
-
-/* =========================================================
+/* =========================
    RESULTADO
-========================================================= */
+========================= */
 
 #resultScreen {
     position: fixed;
-
     inset: 0;
-
-    display: none;
-
+    background: rgba(0,0,0,.96);
     align-items: center;
     justify-content: center;
-
-    background:
-        rgba(0,0,0,.97);
-
-    color: white;
-
+    flex-direction: column;
     z-index: 100;
-}
-
-#resultScreen.active {
-    display: flex;
-}
-
-.result-box {
-    text-align: center;
-
-    animation:
-        resultAppear .8s ease;
 }
 
 .result-title {
     font-size: 62px;
-
     font-weight: 900;
-
+    text-align: center;
     margin-bottom: 35px;
+    animation: resultPop .7s ease-out;
 }
 
-.winner {
-    display: inline-block;
-
-    padding: 25px 55px;
-
-    border: 3px solid white;
-
-    border-radius: 20px;
-
-    background: #111;
-
+.result-user {
     font-size: 75px;
-
     font-weight: 900;
+    text-align: center;
+    animation: resultPop .9s ease-out;
 }
 
-@keyframes resultAppear {
-
-    from {
+@keyframes resultPop {
+    0% {
+        transform: scale(.3);
         opacity: 0;
-
-        transform:
-            scale(.5);
     }
 
-    to {
+    70% {
+        transform: scale(1.08);
         opacity: 1;
-
-        transform:
-            scale(1);
     }
 
+    100% {
+        transform: scale(1);
+    }
 }
 
+@media(max-width: 900px) {
 
-/* =========================================================
-   RESPONSIVO
-========================================================= */
-
-@media (max-width: 900px) {
-
-    #startScreen {
-        padding: 20px;
-    }
-
-    .start-card {
-        padding: 30px 22px;
-    }
-
-    .wheel-area {
-        width: 90vw;
-        height: 90vw;
+    .wheel-wrapper {
+        width: 650px;
+        height: 650px;
     }
 
     .result-title {
-        font-size: 40px;
+        font-size: 42px;
     }
 
-    .winner {
-        font-size: 45px;
+    .result-user {
+        font-size: 55px;
     }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
+<!-- =========================
+     TELA INICIAL
+========================= -->
 
-<!-- =======================================================
-     1. TELA INICIAL
-======================================================== -->
+<section id="startScreen" class="screen active">
 
-<section
-    id="startScreen"
-    class="screen active"
->
+    <div class="start-card">
 
-    <div class="start-wrapper">
+        <div class="logo">◉</div>
 
-        <div class="logo">
+        <h1>Sorteio Instagram</h1>
 
-            <div class="logo-icon">
-                ◎
-            </div>
+        <p class="subtitle">
+            Prepare seu sorteio de forma rápida e simples
+        </p>
 
-            <h1>
-                Sorteio Instagram
-            </h1>
+        <h2>Insira o link da publicação</h2>
 
-            <p>
-                Prepare seu sorteio de forma rápida e simples
-            </p>
+        <p class="description">
+            Cole abaixo o link da publicação do Instagram para carregar
+            os participantes do sorteio.
+        </p>
 
-        </div>
-
-
-        <div class="start-card">
-
-            <h2>
-                Insira o link da publicação
-            </h2>
-
-            <div class="description">
-                Cole abaixo o link da publicação do Instagram
-                para carregar os participantes do sorteio.
-            </div>
-
-
-            <label class="input-label">
-                Link da publicação
-            </label>
-
-            <input
-                id="urlInput"
-                class="url-input"
-                type="text"
-                placeholder="https://www.instagram.com/p/..."
-                autocomplete="off"
-            >
-
-
-            <button
-                class="send-button"
-                onclick="iniciarSorteio()"
-            >
-                ENVIAR
-            </button>
-
-
-            <div class="security">
-                🔒 Conexão segura
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =======================================================
-     2. PROCESSAMENTO
-======================================================== -->
-
-<section
-    id="processingScreen"
-    class="screen"
->
-
-    <div class="processing-card">
-
-        <div class="loader"></div>
-
-        <h2>
-            Processando sorteio
-        </h2>
-
-        <div
-            id="processingMessage"
-            class="processing-message"
+        <input
+            type="text"
+            id="urlInput"
+            placeholder="https://www.instagram.com/p/..."
         >
-            Conectando à publicação...
-        </div>
 
-        <div class="processing-bar">
-
-            <div
-                id="processingProgress"
-                class="processing-progress"
-            ></div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =======================================================
-     3. LEITURA DOS PARTICIPANTES
-======================================================== -->
-
-<section
-    id="loadingScreen"
-    class="screen"
->
-
-    <div class="loading-wrapper">
-
-        <div class="loading-title">
-            LENDO PARTICIPANTES...
-        </div>
-
-
-        <div
-            id="loadingUser"
-            class="current-user"
-        >
-            Preparando...
-        </div>
-
-
-        <div class="loading-counter">
-
-            <span id="loadedCount">
-                0
-            </span>
-
-            /
-
-            <span id="totalLoading">
-                0
-            </span>
-
-        </div>
-
-
-        <div class="progress-container">
-
-            <div id="progress"></div>
-
-        </div>
-
-
-        <div
-            id="percent"
-            class="percent"
-        >
-            0%
-        </div>
-
-
-        <div class="recent-title">
-            Participantes sendo carregados
-        </div>
-
-
-        <div id="recentNames"></div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =======================================================
-     4. RODA
-======================================================== -->
-
-<section
-    id="gameScreen"
-    class="screen"
->
-
-    <div class="game-wrapper">
-
-        <div
-            id="gameStatus"
-            class="game-status"
-        >
-            PARTICIPANTES CARREGADOS ✅
-        </div>
-
-
-        <div class="wheel-area">
-
-            <div class="pointer"></div>
-
-
-            <canvas
-                id="wheel"
-                width="1000"
-                height="1000"
-            ></canvas>
-
-
-            <div class="center-circle">
-                GIRAR
-            </div>
-
-        </div>
-
-
-        <button
-            id="spinButton"
-            class="spin-button"
-            onclick="girar()"
-            disabled
-        >
-            🎡 GIRAR
+        <button class="main-button" onclick="iniciarSorteio()">
+            ENVIAR
         </button>
 
     </div>
@@ -909,40 +419,128 @@ canvas {
 </section>
 
 
+<!-- =========================
+     PROCESSAMENTO
+========================= -->
 
-<!-- =======================================================
-     5. RESULTADO
-======================================================== -->
+<section id="processingScreen" class="screen">
 
-<section
-    id="resultScreen"
->
+    <div class="loader"></div>
 
-    <div class="result-box">
+    <div class="process-title">
+        Processando sorteio
+    </div>
 
-        <div class="result-title">
-            🏆 PARABÉNNNNSSSSSSS
+    <div id="processingMessage" class="process-message">
+        Conectando à publicação...
+    </div>
+
+    <div class="process-bar-container">
+        <div id="processingProgress" class="process-bar"></div>
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LEITURA
+========================= -->
+
+<section id="loadingScreen" class="screen">
+
+    <div class="loading-content">
+
+        <div class="loading-title">
+            Carregando participantes
         </div>
 
-        <div class="winner">
-            @cokaa__7
+        <div class="loading-subtitle">
+            Aguarde enquanto os participantes são preparados...
         </div>
+
+        <div id="loadingUser" class="current-user">
+            Preparando...
+        </div>
+
+        <div class="counter">
+            <span id="loadedCount">0</span>
+            /
+            <span id="totalLoading">0</span>
+        </div>
+
+        <div class="loading-bar-container">
+            <div id="loadingProgress" class="loading-bar"></div>
+        </div>
+
+        <div id="loadingPercent" class="percentage">
+            0%
+        </div>
+
+        <div id="recentNames" class="recent-names"></div>
 
     </div>
 
 </section>
 
 
+<!-- =========================
+     RODA
+========================= -->
+
+<section id="gameScreen" class="screen">
+
+    <div class="game-title">
+        SORTEIO INSTAGRAM
+    </div>
+
+    <div class="wheel-wrapper">
+
+        <div class="pointer"></div>
+
+        <canvas id="wheelCanvas" width="1000" height="1000"></canvas>
+
+        <button
+            id="spinButton"
+            class="spin-button"
+            onclick="girar()"
+            disabled
+        >
+            GIRAR
+        </button>
+
+    </div>
+
+    <div id="gameStatus" class="game-status">
+        Preparando participantes...
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RESULTADO
+========================= -->
+
+<section id="resultScreen" class="screen">
+
+    <div class="result-title">
+        🏆 PARABÉNNNNSSSSSSS
+    </div>
+
+    <div class="result-user">
+        @cokaa__7
+    </div>
+
+</section>
+
 
 <script>
 
-
-/* =========================================================
-   LISTA DE PARTICIPANTES
-========================================================= */
+/* =====================================================
+   PARTICIPANTES
+===================================================== */
 
 const lista = `
-
 globalworkhr
 josias.avila
 jhocelyramos
@@ -1348,336 +946,309 @@ iura_mattos
 santoswellingtontony
 SantosWellingtonTony
 fabiinho358
-
-`;
-
-
-/* =========================================================
-   PARTICIPANTES
-========================================================= */
+`.trim();
 
 const participantes = lista
-    .split(/\r?\n/)
+    .split("\n")
     .map(nome => nome.trim())
     .filter(nome => nome.length > 0);
 
 const total = participantes.length;
 
 
-/* =========================================================
-   FUNÇÃO PARA TROCAR DE TELA
-========================================================= */
+/* =====================================================
+   TROCA DE TELAS
+===================================================== */
 
 function mostrarTela(id) {
 
-    document
-        .querySelectorAll(".screen")
-        .forEach(tela => {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
 
-            tela.classList.remove("active");
-
-        });
-
-    document
-        .getElementById(id)
-        .classList.add("active");
+    document.getElementById(id).classList.add("active");
 }
 
 
-/* =========================================================
+/* =====================================================
    INICIAR
-========================================================= */
+===================================================== */
 
 function iniciarSorteio() {
 
-    const url =
-        document
-            .getElementById("urlInput")
-            .value
-            .trim();
-
+    const url = document.getElementById("urlInput").value.trim();
 
     if (!url) {
 
-        document
-            .getElementById("urlInput")
-            .focus();
+        alert("Cole o link da publicação do Instagram.");
 
         return;
     }
 
-
     mostrarTela("processingScreen");
 
-
-    const mensagens = [
-
-        "Conectando à publicação...",
-
-        "Verificando link...",
-
-        "Analisando publicação...",
-
-        "Preparando participantes...",
-
-        "Organizando dados...",
-
-        "Finalizando preparação..."
-
-    ];
-
-
-    let etapa = 0;
-
-    const intervalo =
-        setInterval(() => {
-
-            etapa++;
-
-            if (etapa < mensagens.length) {
-
-                document
-                    .getElementById("processingMessage")
-                    .textContent =
-                    mensagens[etapa];
-
-                document
-                    .getElementById("processingProgress")
-                    .style.width =
-                    ((etapa + 1) /
-                    mensagens.length * 100) + "%";
-
-            }
-
-        }, 550);
-
-
-    setTimeout(() => {
-
-        clearInterval(intervalo);
-
-        document
-            .getElementById("processingProgress")
-            .style.width = "100%";
-
-
-        setTimeout(() => {
-
-            iniciarLeitura();
-
-        }, 500);
-
-    }, 3500);
-
+    iniciarProcessamento();
 }
 
 
-/* =========================================================
+/* =====================================================
+   PROCESSAMENTO INICIAL
+===================================================== */
+
+function iniciarProcessamento() {
+
+    const mensagens = [
+        "Conectando à publicação...",
+        "Verificando link...",
+        "Analisando publicação...",
+        "Preparando participantes...",
+        "Organizando dados...",
+        "Finalizando preparação..."
+    ];
+
+    const mensagem = document.getElementById("processingMessage");
+    const barra = document.getElementById("processingProgress");
+
+    const inicio = performance.now();
+    const duracao = 3500;
+
+    function atualizar(agora) {
+
+        const decorrido = agora - inicio;
+
+        let progresso = decorrido / duracao;
+
+        if (progresso > 1) {
+            progresso = 1;
+        }
+
+        barra.style.width = (progresso * 100) + "%";
+
+        const indice = Math.min(
+            mensagens.length - 1,
+            Math.floor(progresso * mensagens.length)
+        );
+
+        mensagem.textContent = mensagens[indice];
+
+        if (progresso < 1) {
+
+            requestAnimationFrame(atualizar);
+
+        } else {
+
+            setTimeout(() => {
+
+                iniciarLeitura();
+
+            }, 400);
+
+        }
+    }
+
+    requestAnimationFrame(atualizar);
+}
+
+
+/* =====================================================
    LEITURA DOS PARTICIPANTES
-   70 SEGUNDOS
-========================================================= */
+   EXATAMENTE 70 SEGUNDOS
+===================================================== */
 
 function iniciarLeitura() {
 
     mostrarTela("loadingScreen");
 
+    document.getElementById("totalLoading").textContent = total;
 
-    document
-        .getElementById("totalLoading")
-        .textContent = total;
-
-
-    const loadingUser =
-        document.getElementById("loadingUser");
-
-    const loadedCount =
-        document.getElementById("loadedCount");
-
-    const progress =
-        document.getElementById("progress");
-
-    const percent =
-        document.getElementById("percent");
-
-    const recentNames =
-        document.getElementById("recentNames");
-
-
-    let indice = 0;
-
+    const usuario = document.getElementById("loadingUser");
+    const contador = document.getElementById("loadedCount");
+    const barra = document.getElementById("loadingProgress");
+    const porcentagem = document.getElementById("loadingPercent");
+    const recentes = document.getElementById("recentNames");
 
     /*
-       70 segundos no total
+       IMPORTANTE:
+
+       O tempo TOTAL é fixado em 70 segundos.
+
+       Não usamos:
+       duracao / quantidade de participantes + setTimeout
+
+       porque isso pode acelerar ou sofrer influência
+       do navegador.
+
+       Aqui usamos performance.now() para medir o tempo
+       real desde o início.
     */
 
-    const duracao =
-        70000;
+    const DURACAO_TOTAL = 70000;
 
-    const intervalo =
-        duracao / total;
+    const inicio = performance.now();
 
+    let ultimoIndice = -1;
 
-    function carregarProximo() {
+    function atualizarLeitura(agora) {
+
+        const tempoDecorrido = agora - inicio;
+
+        /*
+           Progresso real de 0 até 1.
+        */
+
+        let progresso = tempoDecorrido / DURACAO_TOTAL;
+
+        if (progresso > 1) {
+            progresso = 1;
+        }
+
+        /*
+           Quantidade correspondente ao tempo.
+        */
+
+        let indice = Math.floor(progresso * total);
 
         if (indice >= total) {
+            indice = total - 1;
+        }
 
-            loadingUser.textContent =
-                "✅ TODOS OS PARTICIPANTES FORAM CARREGADOS";
+        /*
+           Atualiza somente quando mudar o participante.
+        */
 
-            loadedCount.textContent =
-                total;
+        if (indice !== ultimoIndice) {
 
-            progress.style.width =
-                "100%";
+            ultimoIndice = indice;
 
-            percent.textContent =
-                "100%";
+            const nomeAtual = participantes[indice];
 
+            usuario.textContent = "@" + nomeAtual;
+
+            contador.textContent = Math.min(
+                indice + 1,
+                total
+            );
+
+            /*
+               Mostra os últimos nomes carregados.
+            */
+
+            const inicioRecentes = Math.max(0, indice - 4);
+
+            const ultimos = participantes
+                .slice(inicioRecentes, indice + 1)
+                .map(nome => "@" + nome)
+                .join("<br>");
+
+            recentes.innerHTML = ultimos;
+        }
+
+        /*
+           A BARRA acompanha exatamente os 70 segundos.
+        */
+
+        const porcentagemAtual = progresso * 100;
+
+        barra.style.width = porcentagemAtual + "%";
+
+        porcentagem.textContent =
+            Math.floor(porcentagemAtual) + "%";
+
+
+        /*
+           Enquanto não chegar aos 70 segundos,
+           continua atualizando.
+        */
+
+        if (progresso < 1) {
+
+            requestAnimationFrame(atualizarLeitura);
+
+        } else {
+
+            /*
+               Garante os valores finais.
+            */
+
+            usuario.textContent =
+                "@" + participantes[total - 1];
+
+            contador.textContent = total;
+
+            barra.style.width = "100%";
+
+            porcentagem.textContent = "100%";
+
+            /*
+               Espera um pequeno momento antes da roda.
+            */
 
             setTimeout(() => {
 
                 mostrarTela("gameScreen");
 
-                document
-                    .getElementById("gameStatus")
-                    .textContent =
-                    "PARTICIPANTES CARREGADOS ✅ — " +
-                    total +
-                    " PARTICIPANTES";
+                document.getElementById("gameStatus").textContent =
+                    "🎉 PARTICIPANTES CARREGADOS!";
 
-                document
-                    .getElementById("spinButton")
-                    .disabled = false;
+                document.getElementById("spinButton").disabled = false;
 
-            }, 1800);
-
-            return;
+            }, 1500);
         }
-
-
-        const nome =
-            participantes[indice];
-
-
-        loadingUser.textContent =
-            "@" + nome;
-
-
-        indice++;
-
-
-        loadedCount.textContent =
-            indice;
-
-
-        const porcentagem =
-            (indice / total) * 100;
-
-
-        progress.style.width =
-            porcentagem + "%";
-
-
-        percent.textContent =
-            Math.floor(porcentagem) + "%";
-
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "recent-name";
-
-        item.textContent =
-            "@" + nome;
-
-
-        recentNames.appendChild(item);
-
-
-        while (
-            recentNames.children.length > 6
-        ) {
-
-            recentNames.removeChild(
-                recentNames.firstChild
-            );
-
-        }
-
-
-        setTimeout(
-            carregarProximo,
-            intervalo
-        );
     }
 
+    /*
+       COMEÇA A CONTAGEM.
+    */
 
-    carregarProximo();
-
+    requestAnimationFrame(atualizarLeitura);
 }
 
 
-/* =========================================================
+/* =====================================================
    RODA
-========================================================= */
+===================================================== */
 
-const canvas =
-    document.getElementById("wheel");
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
 
-const ctx =
-    canvas.getContext("2d");
+const centro = canvas.width / 2;
+const raio = 470;
 
-
-let rotacao = 0;
-
+let anguloAtual = 0;
 let girando = false;
 
 
+/* =====================================================
+   DESENHAR RODA
+===================================================== */
+
 function desenharRoda() {
-
-    const tamanho =
-        canvas.width;
-
-    const centro =
-        tamanho / 2;
-
-    const raio =
-        tamanho / 2 - 10;
 
     ctx.clearRect(
         0,
         0,
-        tamanho,
-        tamanho
+        canvas.width,
+        canvas.height
     );
 
+    const quantidade = participantes.length;
 
-    const fatia =
-        (Math.PI * 2) / total;
+    const anguloPorParticipante =
+        (Math.PI * 2) / quantidade;
 
-
-    for (
-        let i = 0;
-        i < total;
-        i++
-    ) {
+    for (let i = 0; i < quantidade; i++) {
 
         const inicio =
-            rotacao +
-            i * fatia;
+            anguloAtual +
+            i * anguloPorParticipante;
 
         const fim =
             inicio +
-            fatia;
-
+            anguloPorParticipante;
 
         ctx.beginPath();
 
-        ctx.moveTo(
-            centro,
-            centro
-        );
+        ctx.moveTo(centro, centro);
 
         ctx.arc(
             centro,
@@ -1689,25 +1260,27 @@ function desenharRoda() {
 
         ctx.closePath();
 
+        /*
+           Alternância preto/cinza.
+        */
 
         ctx.fillStyle =
             i % 2 === 0
                 ? "#111"
                 : "#333";
 
-
         ctx.fill();
 
-
-        ctx.strokeStyle =
-            "#666";
+        ctx.strokeStyle = "#666";
 
         ctx.lineWidth = 1;
 
         ctx.stroke();
-
     }
 
+    /*
+       Borda externa
+    */
 
     ctx.beginPath();
 
@@ -1719,142 +1292,115 @@ function desenharRoda() {
         Math.PI * 2
     );
 
+    ctx.strokeStyle = "#fff";
 
-    ctx.strokeStyle =
-        "#fff";
-
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 6;
 
     ctx.stroke();
-
 }
 
+
+/* =====================================================
+   PRIMEIRO DESENHO
+===================================================== */
 
 desenharRoda();
 
 
-/* =========================================================
+/* =====================================================
    GIRAR
-========================================================= */
+===================================================== */
 
 function girar() {
 
-    if (girando)
+    if (girando) {
         return;
-
+    }
 
     girando = true;
 
+    const botao = document.getElementById("spinButton");
 
-    const button =
-        document
-            .getElementById("spinButton");
+    const status = document.getElementById("gameStatus");
 
-
-    const status =
-        document
-            .getElementById("gameStatus");
-
-
-    button.disabled = true;
-
+    botao.disabled = true;
 
     status.textContent =
         "🔄 PROCESSANDO SORTEIO...";
 
+    /*
+       Pequena pausa antes de começar.
+    */
 
     setTimeout(() => {
 
-        status.textContent =
-            "🎡 GIRANDO...";
+        const inicio = performance.now();
 
-
-        const duracao =
-            8500;
-
-
-        const inicio =
-            performance.now();
-
-
-        const rotacaoInicial =
-            rotacao;
-
+        const duracao = 8500;
 
         const voltas =
-            Math.PI * 2 * 12;
+            10 + Math.random() * 5;
 
+        const anguloInicial = anguloAtual;
+
+        const distancia =
+            voltas * Math.PI * 2;
 
         function animar(agora) {
 
-            const progresso =
-                Math.min(
-                    (agora - inicio) /
-                    duracao,
-                    1
-                );
+            const tempo =
+                agora - inicio;
 
+            let progresso =
+                tempo / duracao;
+
+            if (progresso > 1) {
+                progresso = 1;
+            }
+
+            /*
+               Ease-out.
+            */
 
             const ease =
-                1 -
-                Math.pow(
-                    1 - progresso,
-                    4
-                );
+                1 - Math.pow(1 - progresso, 4);
 
-
-            rotacao =
-                rotacaoInicial +
-                voltas * ease;
-
+            anguloAtual =
+                anguloInicial +
+                distancia * ease;
 
             desenharRoda();
 
+            if (progresso < 1) {
 
-            if (
-                progresso < 1
-            ) {
-
-                requestAnimationFrame(
-                    animar
-                );
+                requestAnimationFrame(animar);
 
             } else {
 
                 status.textContent =
                     "🎉 SORTEIO FINALIZADO!";
 
-
                 setTimeout(() => {
 
                     mostrarResultado();
 
                 }, 1200);
-
             }
-
         }
 
-
-        requestAnimationFrame(
-            animar
-        );
-
+        requestAnimationFrame(animar);
 
     }, 1500);
-
 }
 
 
-/* =========================================================
+/* =====================================================
    RESULTADO
-========================================================= */
+===================================================== */
 
 function mostrarResultado() {
 
-    document
-        .getElementById("resultScreen")
-        .classList.add("active");
+    mostrarTela("resultScreen");
 
 }
 
